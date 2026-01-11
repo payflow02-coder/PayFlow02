@@ -4,6 +4,10 @@ function generateCheck() {
 
   const now = new Date();
   document.getElementById("date").innerText =
-    now.toLocaleDateString("kk-KZ") + ", " +
+    now.toLocaleDateString("kk-KZ") + " " +
     now.toLocaleTimeString("kk-KZ");
+}
+
+function downloadPDF() {
+  window.print();
 }
