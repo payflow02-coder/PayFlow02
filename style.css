@@ -5,48 +5,54 @@
 
 body {
   margin: 0;
-  background: #f2f2f2;
-  height: 100vh;
+  background: #f2f3f5;
 }
 
-.container {
+.page {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100%;
+  justify-content: center;
 }
 
 .card {
-  background: #fff;
+  background: #ffffff;
+  width: 340px;
   padding: 30px;
-  width: 320px;
-  border-radius: 12px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.logo {
+  width: 80px;
+  margin-bottom: 10px;
 }
 
 h1 {
-  margin: 0;
+  margin: 10px 0 5px;
+  color: #0057ff;
 }
 
 .subtitle {
-  color: #555;
+  font-size: 14px;
+  color: #666;
   margin-bottom: 20px;
 }
 
 .btn {
   width: 100%;
-  padding: 12px;
+  padding: 13px;
   border: none;
   border-radius: 8px;
-  background: #2563eb;
+  background: #0057ff;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
 }
 
 .btn:hover {
-  background: #1e40af;
+  background: #0045cc;
 }
 
 .secondary {
@@ -62,14 +68,19 @@ h1 {
 .info {
   margin-top: 20px;
   text-align: left;
+  font-size: 15px;
 }
+
+.status {
+  margin-top: 10px;
+  color: #16a34a;
+  font-weight: bold;
+}
+
+/* PDF / PRINT */
 @media print {
   body {
     background: white;
-  }
-
-  .container {
-    height: auto;
   }
 
   .btn {
