@@ -12,6 +12,19 @@ function generateCheck() {
     now.toLocaleTimeString("kk-KZ");
 
   document.getElementById("status").classList.remove("hidden");
+
+  // QR генерация
+  const qrData =
+    window.location.origin +
+    window.location.pathname +
+    "?check=" + id;
+
+  const qrUrl =
+    "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+    encodeURIComponent(qrData);
+
+  document.getElementById("qrImage").src = qrUrl;
+  document.getElementById("qrBox").classList.remove("hidden");
 }
 
 function verifyCheck() {
