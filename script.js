@@ -1,38 +1,28 @@
 let lastCheckId = null;
 
-// DOM толық жүктелгенде ғана іске қосылады
 document.addEventListener("DOMContentLoaded", () => {
-
   document.getElementById("generateBtn").addEventListener("click", generateCheck);
-  document.getElementById("verifyBtn").addEventListener("click", verifyCheck);
   document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
-
+  document.getElementById("verifyBtn").addEventListener("click", verifyCheck);
 });
 
 function generateCheck() {
-  const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
-  lastCheckId = id;
+  const random = Math.floor(100000 + Math.random() * 900000);
+  lastCheckId = "PF-" + random;
 
-  document.getElementById("checkId").innerText = id;
-
-  const now = new Date();
+  document.getElementById("checkId").innerText = lastCheckId;
   document.getElementById("date").innerText =
-    now.toLocaleDateString("kk-KZ") + " " +
-    now.toLocaleTimeString("kk-KZ");
+    new Date().toLocaleString("kk-KZ");
 
-  document.getElementById("status").classList.remove("hidden");
+  document.getElementById("verifyResult").innerText = "";
+}
 
-  const qrData =
-    window.location.origin +
-    window.location.pathname +
-    "?check=" + id;
-
-  const qrUrl =
-    "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
-    encodeURIComponent(qrData);
-
-  document.getElementById("qrImage").src = qrUrl;
-  document.getElementById("qrBox").classList.remove("hidden");
+function downloadPDF() {
+  if (!lastCheckId) {
+    alert("Алдымен чек жасаңыз!");
+    return;
+  }
+  window.print();
 }
 
 function verifyCheck() {
@@ -40,8 +30,8 @@ function verifyCheck() {
   const result = document.getElementById("verifyResult");
 
   if (!input) {
-    result.innerText = "⚠️ Чек ID енгізіңіз";
-    result.style.color = "orange";
+    result.innerText = "Чек ID енгізіңіз";
+    result.style.color = "red";
     return;
   }
 
@@ -52,8 +42,4 @@ function verifyCheck() {
     result.innerText = "❌ Чек табылмады";
     result.style.color = "red";
   }
-}
-
-function downloadPDF() {
-  window.print();
 }
