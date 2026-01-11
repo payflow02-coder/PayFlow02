@@ -3,24 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <title>PayFlow</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CSS қосу -->
+  <!-- МІНЕ ОСЫ ЖОЛ ЕҢ МАҢЫЗДЫ -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container">
-    <h1>PayFlow</h1>
+  <div class="page">
+    <div class="card">
+      <h1 class="title">PayFlow</h1>
 
-    <button onclick="generateCheck()">Чек жасау</button>
+      <button class="btn" onclick="generateCheck()">Чек жасау</button>
 
-    <p>ID: <span id="checkId">—</span></p>
-    <p>Күні: <span id="date">—</span></p>
+      <div class="info">
+        <p><strong>ID:</strong> <span id="checkId">—</span></p>
+        <p><strong>Күні:</strong> <span id="date">—</span></p>
+      </div>
+    </div>
   </div>
 
-  <!-- JS қосу -->
   <script src="script.js"></script>
-
 </body>
 </html>
