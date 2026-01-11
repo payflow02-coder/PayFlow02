@@ -3,22 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <title>PayFlow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container">
+  <div class="page">
     <div class="card">
+
+      <!-- ЛОГОТИП -->
+      <img src="logo.png" alt="PayFlow logo" class="logo">
+
       <h1>PayFlow</h1>
       <p class="subtitle">Цифрлық чек жүйесі</p>
 
+      <!-- БАТЫРМАЛАР -->
       <button class="btn" onclick="generateCheck()">Чек жасау</button>
       <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
 
+      <!-- ЧЕК АҚПАРАТЫ -->
       <div class="info">
         <p><strong>ID:</strong> <span id="checkId">—</span></p>
         <p><strong>Күні:</strong> <span id="date">—</span></p>
+        <p class="status">🟢 Төлем расталды</p>
       </div>
+
     </div>
   </div>
 
