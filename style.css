@@ -5,47 +5,61 @@
 
 body {
   margin: 0;
-  background: #f2f3f5;
+  background: #f2f2f2;
+  height: 100vh;
 }
 
-.page {
-  min-height: 100vh;
+.container {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .card {
-  background: white;
-  width: 320px;
+  background: #fff;
   padding: 30px;
+  width: 320px;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-.title {
+h1 {
+  margin: 0;
+}
+
+.subtitle {
+  color: #555;
   margin-bottom: 20px;
-  color: #0057ff;
 }
 
 .btn {
   width: 100%;
   padding: 12px;
   border: none;
-  background: #0057ff;
-  color: white;
-  font-size: 16px;
   border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 16px;
   cursor: pointer;
 }
 
 .btn:hover {
-  background: #0045cc;
+  background: #1e40af;
+}
+
+.secondary {
+  margin-top: 10px;
+  background: #e5e7eb;
+  color: #111;
+}
+
+.secondary:hover {
+  background: #d1d5db;
 }
 
 .info {
   margin-top: 20px;
   text-align: left;
-  font-size: 15px;
 }
