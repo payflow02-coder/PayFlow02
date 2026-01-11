@@ -11,17 +11,17 @@ body {
 .container {
   min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .card {
-  background: white;
+  background: #ffffff;
   width: 360px;
   padding: 25px;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
 
 .logo {
@@ -30,8 +30,8 @@ body {
 }
 
 .subtitle {
-  color: #6b7280;
   font-size: 14px;
+  color: #6b7280;
   margin-bottom: 20px;
 }
 
@@ -39,10 +39,10 @@ body {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
-  background: linear-gradient(90deg, #2563eb, #1d4ed8);
-  color: white;
   border: none;
   border-radius: 10px;
+  background: #2563eb;
+  color: white;
   font-size: 16px;
   cursor: pointer;
 }
@@ -58,6 +58,10 @@ body {
 
 .secondary:hover {
   background: #d1d5db;
+}
+
+.small {
+  font-size: 14px;
 }
 
 .info {
