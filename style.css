@@ -11,8 +11,8 @@ body {
 .page {
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .card {
@@ -114,10 +114,6 @@ hr {
 
 /* PDF */
 @media print {
-  body {
-    background: white;
-  }
-
   button, input {
     display: none;
   }
