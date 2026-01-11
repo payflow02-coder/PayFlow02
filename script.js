@@ -1,5 +1,14 @@
 let lastCheckId = null;
 
+// DOM толық жүктелгенде ғана іске қосылады
+document.addEventListener("DOMContentLoaded", () => {
+
+  document.getElementById("generateBtn").addEventListener("click", generateCheck);
+  document.getElementById("verifyBtn").addEventListener("click", verifyCheck);
+  document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
+
+});
+
 function generateCheck() {
   const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
   lastCheckId = id;
@@ -13,7 +22,6 @@ function generateCheck() {
 
   document.getElementById("status").classList.remove("hidden");
 
-  // QR генерация
   const qrData =
     window.location.origin +
     window.location.pathname +
