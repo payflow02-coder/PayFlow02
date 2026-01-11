@@ -16,8 +16,8 @@
     <h1>PayFlow</h1>
     <p class="slogan">Чек жоқ = сенім жоқ</p>
 
-    <button class="btn" onclick="generateCheck()">Чек жасау</button>
-    <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
+    <button class="btn" id="generateBtn">Чек жасау</button>
+    <button class="btn secondary" id="pdfBtn">PDF жүктеу</button>
 
     <div class="info">
       <p><strong>Чек ID:</strong> <span id="checkId">—</span></p>
@@ -25,22 +25,22 @@
       <p id="status" class="status hidden">🟢 Төлем расталды</p>
     </div>
 
-    <!-- QR -->
     <div id="qrBox" class="qr hidden">
       <p><strong>QR-код арқылы тексеру</strong></p>
-      <img id="qrImage" alt="QR код">
+      <img id="qrImage">
     </div>
 
     <hr>
 
     <h3>Чекті тексеру</h3>
     <input type="text" id="verifyInput" placeholder="Чек ID енгіз (PF-123456)">
-    <button class="btn small" onclick="verifyCheck()">Тексеру</button>
+    <button class="btn small" id="verifyBtn">Тексеру</button>
     <p id="verifyResult" class="verify"></p>
 
   </div>
 </div>
 
+<!-- ❗ SCRIPT ӘРҚАШАН ОСЫ ЖЕРДЕ -->
 <script src="script.js"></script>
 </body>
 </html>
