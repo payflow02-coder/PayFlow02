@@ -16,12 +16,12 @@ body {
 }
 
 .card {
-  background: #ffffff;
-  width: 340px;
+  background: #fff;
+  width: 360px;
   padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  border-radius: 16px;
   text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
 
 .logo {
@@ -30,11 +30,11 @@ body {
 }
 
 h1 {
-  margin: 10px 0 5px;
+  margin: 5px 0;
   color: #0057ff;
 }
 
-.subtitle {
+.slogan {
   font-size: 14px;
   color: #666;
   margin-bottom: 20px;
@@ -46,7 +46,7 @@ h1 {
   border: none;
   border-radius: 8px;
   background: #0057ff;
-  color: #fff;
+  color: white;
   font-size: 16px;
   cursor: pointer;
 }
@@ -65,6 +65,11 @@ h1 {
   background: #d1d5db;
 }
 
+.small {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
 .info {
   margin-top: 20px;
   text-align: left;
@@ -72,21 +77,40 @@ h1 {
 }
 
 .status {
-  margin-top: 10px;
+  margin-top: 8px;
   color: #16a34a;
   font-weight: bold;
 }
 
-/* PDF / PRINT */
+.hidden {
+  display: none;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.verify {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+hr {
+  margin: 25px 0;
+}
+
+/* PDF */
 @media print {
   body {
     background: white;
   }
-
-  .btn {
+  .btn, input {
     display: none;
   }
-
   .card {
     box-shadow: none;
     border: 1px solid #ccc;
