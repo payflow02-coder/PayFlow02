@@ -2,7 +2,7 @@
 <html lang="kk">
 <head>
   <meta charset="UTF-8">
-  <title>PayFlow</title>
+  <title>PayFlow — Цифрлық чек</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -25,8 +25,22 @@
       <p id="status" class="status hidden">🟢 Төлем расталды</p>
     </div>
 
+    <!-- QR -->
+    <div id="qrBox" class="qr hidden">
+      <p><strong>QR-код арқылы тексеру</strong></p>
+      <img id="qrImage" alt="QR код">
+    </div>
+
     <hr>
 
     <h3>Чекті тексеру</h3>
+    <input type="text" id="verifyInput" placeholder="Чек ID енгіз (PF-123456)">
+    <button class="btn small" onclick="verifyCheck()">Тексеру</button>
+    <p id="verifyResult" class="verify"></p>
 
-    <input ty
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
