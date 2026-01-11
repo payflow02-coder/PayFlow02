@@ -1,6 +1,6 @@
 function generateCheck() {
-  const randomId = "PF-" + Math.floor(100000 + Math.random() * 900000);
-  document.getElementById("checkId").innerText = randomId;
+  const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
+  document.getElementById("checkId").innerText = id;
 
   const now = new Date();
   document.getElementById("date").innerText =
