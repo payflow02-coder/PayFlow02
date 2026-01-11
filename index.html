@@ -8,39 +8,25 @@
 </head>
 <body>
 
-  <div class="page">
-    <div class="card">
+<div class="page">
+  <div class="card">
 
-      <!-- ЛОГОТИП -->
-      <img src="logo.png" alt="PayFlow логотипі" class="logo">
+    <img src="logo.png" alt="PayFlow логотипі" class="logo">
 
-      <!-- АТЫ + СЛОГАН -->
-      <h1>PayFlow</h1>
-      <p class="slogan">Чек жоқ = сенім жоқ</p>
+    <h1>PayFlow</h1>
+    <p class="slogan">Чек жоқ = сенім жоқ</p>
 
-      <!-- ЧЕК ЖАСАУ -->
-      <button class="btn" onclick="generateCheck()">Чек жасау</button>
-      <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
+    <button class="btn" onclick="generateCheck()">Чек жасау</button>
+    <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
 
-      <!-- ЧЕК НӘТИЖЕСІ -->
-      <div class="info">
-        <p><strong>Чек ID:</strong> <span id="checkId">—</span></p>
-        <p><strong>Күні:</strong> <span id="date">—</span></p>
-        <p id="status" class="status hidden">🟢 Төлем расталды</p>
-      </div>
-
-      <hr>
-
-      <!-- ID ТЕКСЕРУ -->
-      <h3>Чекті тексеру</h3>
-      <input type="text" id="verifyInput" placeholder="Чек ID енгіз">
-      <button class="btn small" onclick="verifyCheck()">Тексеру</button>
-
-      <p id="verifyResult" class="verify"></p>
-
+    <div class="info">
+      <p><strong>Чек ID:</strong> <span id="checkId">—</span></p>
+      <p><strong>Күні:</strong> <span id="date">—</span></p>
+      <p id="status" class="status hidden">🟢 Төлем расталды</p>
     </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
-</html>
+    <hr>
+
+    <h3>Чекті тексеру</h3>
+
+    <input ty
