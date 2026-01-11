@@ -12,21 +12,31 @@
     <div class="card">
 
       <!-- ЛОГОТИП -->
-      <img src="logo.png" alt="PayFlow logo" class="logo">
+      <img src="logo.png" alt="PayFlow логотипі" class="logo">
 
+      <!-- АТЫ + СЛОГАН -->
       <h1>PayFlow</h1>
-      <p class="subtitle">Цифрлық чек жүйесі</p>
+      <p class="slogan">Чек жоқ = сенім жоқ</p>
 
-      <!-- БАТЫРМАЛАР -->
+      <!-- ЧЕК ЖАСАУ -->
       <button class="btn" onclick="generateCheck()">Чек жасау</button>
       <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
 
-      <!-- ЧЕК АҚПАРАТЫ -->
+      <!-- ЧЕК НӘТИЖЕСІ -->
       <div class="info">
-        <p><strong>ID:</strong> <span id="checkId">—</span></p>
+        <p><strong>Чек ID:</strong> <span id="checkId">—</span></p>
         <p><strong>Күні:</strong> <span id="date">—</span></p>
-        <p class="status">🟢 Төлем расталды</p>
+        <p id="status" class="status hidden">🟢 Төлем расталды</p>
       </div>
+
+      <hr>
+
+      <!-- ID ТЕКСЕРУ -->
+      <h3>Чекті тексеру</h3>
+      <input type="text" id="verifyInput" placeholder="Чек ID енгіз">
+      <button class="btn small" onclick="verifyCheck()">Тексеру</button>
+
+      <p id="verifyResult" class="verify"></p>
 
     </div>
   </div>
