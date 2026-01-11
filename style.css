@@ -16,7 +16,7 @@ body {
 }
 
 .card {
-  background: #ffffff;
+  background: white;
   width: 360px;
   padding: 25px;
   border-radius: 16px;
@@ -81,8 +81,11 @@ hr {
   margin: 20px 0;
 }
 
+/* АВТОРЛЫҚ — МІНДЕТТІ КӨРІНЕДІ */
 .author {
+  display: block;
   margin-top: 20px;
   font-size: 12px;
   color: #6b7280;
+  text-align: center;
 }
