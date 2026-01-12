@@ -11,32 +11,38 @@
 <div class="container">
   <div class="card">
 
-    <img src="logo.png" class="logo" alt="PayFlow">
+    <!-- ЛОГО -->
+    <img src="logo.png" alt="PayFlow логотипі" class="logo">
 
     <h1>PayFlow</h1>
     <p class="subtitle">Чек жоқ = сенім жоқ</p>
 
-    <input id="payer" placeholder="Төлеуші (Айбек Қ.)">
-    <input id="receiver" placeholder="Алушы (PayFlow Store)">
-    <input id="amount" type="number" placeholder="Сома (₸)">
+    <!-- ЕНГІЗУ -->
+    <input type="text" id="payer" placeholder="Төлеуші (Айбек Қ.)">
+    <input type="text" id="receiver" placeholder="Алушы (PayFlow Store)">
+    <input type="number" id="amount" placeholder="Сома (₸)">
 
+    <!-- БАТЫРМАЛАР -->
     <button class="btn" onclick="generateCheck()">Чек жасау</button>
     <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
 
+    <!-- ЧЕК НӘТИЖЕСІ -->
     <div class="check">
-      <p><b>Төлеуші:</b> <span id="outPayer">—</span></p>
-      <p><b>Алушы:</b> <span id="outReceiver">—</span></p>
-      <p><b>Сома:</b> <span id="outAmount">—</span></p>
-      <p><b>Чек ID:</b> <span id="outId">—</span></p>
-      <p><b>Hash:</b> <span id="outHash">—</span></p>
+      <p><strong>Төлеуші:</strong> <span id="outPayer">—</span></p>
+      <p><strong>Алушы:</strong> <span id="outReceiver">—</span></p>
+      <p><strong>Сома:</strong> <span id="outAmount">—</span></p>
+      <p><strong>Чек ID:</strong> <span id="outId">—</span></p>
+      <p><strong>Hash:</strong> <span id="outHash">—</span></p>
       <p class="status">Төлем расталды</p>
     </div>
 
+    <!-- QR -->
     <div class="qr">
-      <p><b>QR арқылы чек / төлем (demo)</b></p>
-      <img id="qrImg" alt="QR code">
+      <p><strong>QR арқылы чек / төлем (demo)</strong></p>
+      <img id="qrImg" alt="QR код">
     </div>
 
+    <!-- АВТОРЛЫҚ -->
     <p class="author">
       © 2026 PayFlow — Авторлық жоба<br>
       Чек жоқ = сенім жоқ
