@@ -105,3 +105,97 @@
 <script src="script.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <title>PayFlow — Цифрлық чек</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2563eb">
+</head>
+<body>
+
+<!-- LANGUAGE SWITCH -->
+<div class="lang-switch">
+  <button onclick="setLang('kk')">KZ</button>
+  <button onclick="setLang('ru')">RU</button>
+  <button onclick="setLang('en')">EN</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <img src="logo.png" class="hero-logo">
+  <h1 data-i18n="heroTitle">PayFlow</h1>
+
+  <p class="hero-text" data-i18n="heroText">
+    Төлем жасалғанын дәлелдейтін цифрлық чек сервисі.  
+    ID, Hash және QR арқылы қорғалған.
+  </p>
+
+  <a href="#service" class="btn big" data-i18n="makeCheck">Чек жасау</a>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <h2 data-i18n="why">Неге PayFlow?</h2>
+  <ul>
+    <li data-i18n="f1">✔ Өзгертілмейтін чек</li>
+    <li data-i18n="f2">✔ Бірегей ID + Hash</li>
+    <li data-i18n="f3">✔ QR арқылы тексеру</li>
+    <li data-i18n="f4">✔ Қағаз чек қажет емес</li>
+  </ul>
+</section>
+
+<!-- SERVICE -->
+<section id="service" class="service">
+  <div class="card">
+
+    <h2 data-i18n="create">Цифрлық чек жасау</h2>
+
+    <input id="payer" data-i18n-ph="payer" placeholder="Төлеуші">
+    <input id="receiver" data-i18n-ph="receiver" placeholder="Алушы">
+    <input id="amount" type="number" data-i18n-ph="amount" placeholder="Сома (₸)">
+
+    <button class="btn" onclick="generateCheck()" data-i18n="makeCheck">Чек жасау</button>
+    <button class="btn secondary" onclick="downloadPDF()" data-i18n="pdf">PDF жүктеу</button>
+
+    <div id="checkBox" class="check hidden">
+      <p><b data-i18n="payer">Төлеуші:</b> <span id="outPayer"></span></p>
+      <p><b data-i18n="receiver">Алушы:</b> <span id="outReceiver"></span></p>
+      <p><b data-i18n="amount">Сома:</b> <span id="outAmount"></span> ₸</p>
+      <p><b>Check ID:</b> <span id="checkId"></span></p>
+      <p><b>Hash:</b> <span id="hash"></span></p>
+
+      <p class="success" data-i18n="success">✅ Төлем расталды</p>
+      <p class="secure" data-i18n="secure">
+        Бұл чек PayFlow жүйесінде тіркелген және өзгертілмейді
+      </p>
+
+      <div id="qr"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- VERIFY -->
+<section class="verify">
+  <h2 data-i18n="verify">Чекті тексеру</h2>
+  <input id="vid" placeholder="Check ID">
+  <input id="vhash" placeholder="Hash">
+  <button class="btn" onclick="verifyCheck()" data-i18n="check">Тексеру</button>
+  <div id="verifyResult"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 PayFlow — Авторлық жоба</p>
+  <p class="demo" data-i18n="demo">
+    Бұл сайт — демонстрациялық прототип. Нақты төлем қабылдамайды.
+  </p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
