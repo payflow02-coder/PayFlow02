@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: Arial;
-  background: #f3f4f6;
+  font-family: Arial, sans-serif;
+  background-color: #f3f4f6;
 }
 
 .lang {
@@ -12,41 +12,47 @@ body {
 .lang button {
   padding: 6px 10px;
   margin: 0 4px;
+  cursor: pointer;
 }
 
 .card {
   max-width: 360px;
-  margin: auto;
-  background: white;
+  margin: 20px auto;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 14px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
   width: 70px;
+  margin-bottom: 10px;
 }
 
 input {
   width: 100%;
   padding: 10px;
   margin: 6px 0;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
 }
 
 .btn {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
-  background: #2563eb;
-  color: white;
+  background-color: #2563eb;
+  color: #ffffff;
   border: none;
   border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .gray {
-  background: #e5e7eb;
-  color: black;
+  background-color: #e5e7eb;
+  color: #111111;
 }
 
 .hidden {
