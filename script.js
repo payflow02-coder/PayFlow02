@@ -1,86 +1,58 @@
-// ===== ТІЛ ДЕРЕКТЕРІ =====
-let currentLang = "kk";
+ function generateCheck() {
+  vibrate();
 
-const TEXT = {
-  kk: {
-    title: "Чек жасау",
-    payer: "Төлеуші",
-    receiver: "Алушы",
-    amount: "Сома (₸)",
-    btn: "Чек жасау",
-    alert: "Барлық жолды толтырыңыз",
-    status: "Төлем расталды"
-  },
-  ru: {
-    title: "Создать чек",
-    payer: "Плательщик",
-    receiver: "Получатель",
-    amount: "Сумма (₸)",
-    btn: "Создать чек",
-    alert: "Заполните все поля",
-    status: "Платеж подтвержден"
-  },
-  en: {
-    title: "Create receipt",
-    payer: "Payer",
-    receiver: "Receiver",
-    amount: "Amount (₸)",
-    btn: "Create receipt",
-    alert: "Please fill all fields",
-    status: "Payment confirmed"
-  }
-};
-
-// ===== ТІЛ АУЫСТЫРУ =====
-function setLang(lang) {
-  currentLang = lang;
-
-  document.getElementById("title").innerText = TEXT[lang].title;
-  document.getElementById("payer").placeholder = TEXT[lang].payer;
-  document.getElementById("receiver").placeholder = TEXT[lang].receiver;
-  document.getElementById("amount").placeholder = TEXT[lang].amount;
-  document.getElementById("btn").innerText = TEXT[lang].btn;
-
-  const statusEl = document.getElementById("status");
-  if (statusEl) statusEl.innerText = TEXT[lang].status;
-}
-
-// ===== ЧЕК ЖАСАУ =====
-function generateCheck() {
-  const payer = document.getElementById("payer").value.trim();
-  const receiver = document.getElementById("receiver").value.trim();
-  const amount = document.getElementById("amount").value.trim();
+  const payer = payerVal();
+  const receiver = receiverVal();
+  const amount = amountVal();
 
   if (!payer || !receiver || !amount) {
-    alert(TEXT[currentLang].alert);
+    alert("Барлық жолды толтырыңыз!");
     return;
   }
 
-  // Check ID
-  const checkId = "PF-" + Math.floor(100000 + Math.random() * 900000);
+  const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
+  const hash = "H" + Date.now();
 
-  // Hash (demo)
-  const hash = btoa(payer + receiver + amount + checkId).substring(0, 16);
+  const data = { payer, receiver, amount, id, hash };
+  localStorage.setItem(id, JSON.stringify(data));
 
-  // Экранға шығару
-  document.getElementById("oPayer").innerText = payer;
-  document.getElementById("oReceiver").innerText = receiver;
-  document.getElementById("oAmount").innerText = amount;
-  document.getElementById("checkId").innerText = checkId;
-  document.getElementById("hash").innerText = hash;
-  document.getElementById("status").innerText = TEXT[currentLang].status;
+  out("outPayer", payer);
+  out("outReceiver", receiver);
+  out("outAmount", amount);
+  out("checkId", id);
+  out("hash", hash);
 
-  // QR
-  const qrText = "PayFlow чек | " + checkId + " | " + hash;
-  document.getElementById("qr").src =
-    "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
-    encodeURIComponent(qrText);
+  document.getElementById("qr").innerHTML =
+    `<img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(id + "|" + hash)}">`;
 
-  // Чек көрсету
-  document.getElementById("receipt").classList.remove("hidden");
+  document.getElementById("checkBox").classList.remove("hidden");
 }
 
-// ===== PDF =====
+function verifyCheck() {
+  const id = document.getElementById("vid").value.trim();
+  const hash = document.getElementById("vhash").value.trim();
+  const box = document.getElementById("verifyResult");
+
+  const data = localStorage.getItem(id);
+  if (!data) {
+    box.innerHTML = "❌ Чек табылмады";
+    return;
+  }
+
+  const check = JSON.parse(data);
+  box.innerHTML =
+    check.hash === hash
+      ? "✅ Чек расталды"
+      : "❌ Hash сәйкес емес";
+}
+
 function downloadPDF() {
   window.print();
 }
+
+/* helpers */
+function out(id, v){ document.getElementById(id).innerText = v; }
+function payerVal(){ return document.getElementById("payer").value.trim(); }
+function receiverVal(){ return document.getElementById("receiver").value.trim(); }
+function amountVal(){ return document.getElementById("amount").value.trim(); }
+function vibrate(){ if (navigator.vibrate) navigator.vibrate(30); }
