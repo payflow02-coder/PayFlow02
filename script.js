@@ -1,59 +1,47 @@
-let lastCheckId = null;
-
-// Бет толық жүктелген соң батырмаларды байлаймыз
-document.addEventListener("DOMContentLoaded", function () {
-  const generateBtn = document.getElementById("generateBtn");
-  const pdfBtn = document.getElementById("pdfBtn");
-  const verifyBtn = document.getElementById("verifyBtn");
-
-  if (generateBtn) generateBtn.onclick = generateCheck;
-  if (pdfBtn) pdfBtn.onclick = downloadPDF;
-  if (verifyBtn) verifyBtn.onclick = verifyCheck;
-});
-
-// Чек генерациялау
 function generateCheck() {
-  const randomNumber = Math.floor(100000 + Math.random() * 900000);
-  lastCheckId = "PF-" + randomNumber;
+  const payer = document.getElementById("payer").value.trim();
+  const receiver = document.getElementById("receiver").value.trim();
+  const amount = document.getElementById("amount").value.trim();
 
-  const checkIdEl = document.getElementById("checkId");
-  const dateEl = document.getElementById("date");
-  const verifyResult = document.getElementById("verifyResult");
+  if (!payer || !receiver || !amount) {
+    alert("Барлық жолды толтырыңыз");
+    return;
+  }
 
-  if (checkIdEl) checkIdEl.textContent = lastCheckId;
-  if (dateEl) dateEl.textContent = new Date().toLocaleString("kk-KZ");
-  if (verifyResult) verifyResult.textContent = "";
+  const checkId = "PF-" + Math.floor(100000 + Math.random() * 900000);
+  const date = new Date().toISOString();
+
+  const rawData = payer + receiver + amount + checkId + date;
+  const hash = simpleHash(rawData);
+
+  document.getElementById("outPayer").innerText = payer;
+  document.getElementById("outReceiver").innerText = receiver;
+  document.getElementById("outAmount").innerText = amount + " ₸";
+  document.getElementById("outId").innerText = checkId;
+  document.getElementById("outHash").innerText = hash;
+
+  // QR (чек + төлемге өту demo)
+  const qrData = `PayFlow чек
+ID: ${checkId}
+Сома: ${amount} ₸
+Hash: ${hash}`;
+
+  document.getElementById("qrImg").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+    encodeURIComponent(qrData);
 }
 
-// PDF жүктеу (браузер арқылы)
+// Қарапайым hash (авторлық логика)
+function simpleHash(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return "H" + Math.abs(hash);
+}
+
+// PDF
 function downloadPDF() {
-  if (!lastCheckId) {
-    alert("Алдымен чек жасаңыз!");
-    return;
-  }
   window.print();
-}
-
-// Чек ID тексеру
-function verifyCheck() {
-  const inputEl = document.getElementById("verifyInput");
-  const resultEl = document.getElementById("verifyResult");
-
-  if (!inputEl || !resultEl) return;
-
-  const inputValue = inputEl.value.trim();
-
-  if (inputValue === "") {
-    resultEl.textContent = "Чек ID енгізіңіз";
-    resultEl.style.color = "red";
-    return;
-  }
-
-  if (inputValue === lastCheckId) {
-    resultEl.textContent = "✅ Чек расталды";
-    resultEl.style.color = "green";
-  } else {
-    resultEl.textContent = "❌ Чек табылмады";
-    resultEl.style.color = "red";
-  }
 }
