@@ -11,34 +11,29 @@
 <div class="container">
   <div class="card">
 
-    <!-- Language switch -->
-    <select id="lang" onchange="setLang(this.value)">
+    <!-- Language -->
+    <select id="lang">
       <option value="kk">KZ</option>
       <option value="ru">RU</option>
       <option value="en">EN</option>
     </select>
 
-    <img src="logo.png" class="logo" alt="PayFlow logo">
+    <img src="logo.png" class="logo" alt="PayFlow">
 
     <h1>PayFlow</h1>
     <p id="slogan">Чек жоқ = сенім жоқ</p>
 
-    <!-- Inputs -->
     <input id="payer" type="text" placeholder="Төлеуші">
     <input id="receiver" type="text" placeholder="Алушы">
     <input id="amount" type="number" placeholder="Сома (₸)">
 
-    <!-- Button -->
-    <button class="btn" id="btnCreate" onclick="generateCheck()">
-      Чек жасау
-    </button>
+    <button class="btn" id="createBtn">Чек жасау</button>
 
-    <!-- Receipt (hidden initially) -->
+    <!-- RECEIPT -->
     <div id="receipt" class="receipt">
-
-      <p><b id="tPayer">Төлеуші:</b> <span id="rPayer"></span></p>
-      <p><b id="tReceiver">Алушы:</b> <span id="rReceiver"></span></p>
-      <p><b id="tAmount">Сома:</b> <span id="rAmount"></span> ₸</p>
+      <p><b id="lPayer">Төлеуші:</b> <span id="rPayer"></span></p>
+      <p><b id="lReceiver">Алушы:</b> <span id="rReceiver"></span></p>
+      <p><b id="lAmount">Сома:</b> <span id="rAmount"></span> ₸</p>
       <p><b>Check ID:</b> <span id="rId"></span></p>
       <p><b>Hash:</b> <span id="rHash"></span></p>
 
@@ -46,12 +41,9 @@
 
       <div id="qr"></div>
 
-      <button class="btn secondary" id="btnPdf" onclick="downloadPDF()">
-        PDF жүктеу
-      </button>
+      <button class="btn secondary" id="pdfBtn">PDF жүктеу</button>
     </div>
 
-    <!-- Author -->
     <p class="author" id="author">
       © 2026 PayFlow — Авторлық жоба<br>
       Чек жоқ = сенім жоқ
