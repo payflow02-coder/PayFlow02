@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>PayFlow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,7 +13,8 @@
 <div class="container">
   <div class="card">
 
-    <img src="logo.png" class="logo" alt="PayFlow">
+    <!-- LOGO -->
+    <img src="logo.png" alt="PayFlow logo" class="logo">
 
     <h1>PayFlow</h1>
     <p class="subtitle">Чек жоқ = сенім жоқ</p>
@@ -20,21 +24,24 @@
     <input id="receiver" type="text" placeholder="Алушы">
     <input id="amount" type="number" placeholder="Сома (₸)">
 
+    <!-- BUTTONS -->
     <button class="btn" onclick="generateCheck()">Чек жасау</button>
     <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
 
-    <!-- CHECK (HIDDEN) -->
+    <!-- CHECK OUTPUT (HIDDEN INITIALLY) -->
     <div id="checkBox" class="check hidden">
       <p><b>Төлеуші:</b> <span id="outPayer"></span></p>
       <p><b>Алушы:</b> <span id="outReceiver"></span></p>
       <p><b>Сома:</b> <span id="outAmount"></span> ₸</p>
       <p><b>Чек ID:</b> <span id="checkId"></span></p>
       <p><b>Hash:</b> <span id="hash"></span></p>
-      <p class="success">Төлем расталды</p>
+      <p class="success">✅ Төлем расталды</p>
 
+      <p class="qr-title">QR арқылы тексеру (demo)</p>
       <div id="qr"></div>
     </div>
 
+    <!-- AUTHOR -->
     <p class="author">
       © 2026 PayFlow — Авторлық жоба<br>
       Чек жоқ = сенім жоқ
@@ -43,6 +50,7 @@
   </div>
 </div>
 
+<!-- JS -->
 <script src="script.js"></script>
 </body>
 </html>
