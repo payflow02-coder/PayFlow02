@@ -38,34 +38,52 @@ const TEXT = {
 
 function setLang(l) {
   LANG = l;
-  t_title.innerText = TEXT[l].title;
-  t_desc.innerHTML = TEXT[l].desc;
-  payer.placeholder = TEXT[l].payer;
-  receiver.placeholder = TEXT[l].receiver;
-  amount.placeholder = TEXT[l].amount;
-  t_btn_create.innerText = TEXT[l].create;
-  t_btn_pdf.innerText = TEXT[l].pdf;
-  t_status.innerText = TEXT[l].status;
+  document.getElementById("t_title").innerText = TEXT[l].title;
+  document.getElementById("t_desc").innerHTML = TEXT[l].desc;
+  document.getElementById("payer").placeholder = TEXT[l].payer;
+  document.getElementById("receiver").placeholder = TEXT[l].receiver;
+  document.getElementById("amount").placeholder = TEXT[l].amount;
+  document.getElementById("t_btn_create").innerText = TEXT[l].create;
+  document.getElementById("t_btn_pdf").innerText = TEXT[l].pdf;
+  document.getElementById("t_status").innerText = TEXT[l].status;
 }
 
-function generateCheck() {
-  if (!payer.value || !receiver.value || !amount.value) {
+// UTF-8 SAFE HASH
+function makeHash(str) {
+  return crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(str)
+  ).then(buf =>
+    Array.from(new Uint8Array(buf))
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("")
+      .slice(0, 24)
+  );
+}
+
+async function generateCheck() {
+  const p = payer.value.trim();
+  const r = receiver.value.trim();
+  const a = amount.value.trim();
+
+  if (!p || !r || !a) {
     alert(TEXT[LANG].alert);
     return;
   }
 
-  outPayer.innerText = payer.value;
-  outReceiver.innerText = receiver.value;
-  outAmount.innerText = amount.value;
+  outPayer.innerText = p;
+  outReceiver.innerText = r;
+  outAmount.innerText = a;
 
   const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
   checkId.innerText = id;
 
-  const raw = payer.value + receiver.value + amount.value + id;
-  hash.innerText = btoa(raw).slice(0, 20);
+  const raw = `${p}|${r}|${a}|${id}`;
+  hash.innerText = await makeHash(raw);
 
-  qr.innerHTML =
-    `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${id}">`;
+  qr.innerHTML = `
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(id)}">
+  `;
 
   checkBox.classList.remove("hidden");
 }
