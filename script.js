@@ -1,76 +1,64 @@
-const text = {
+let lang = "kk";
+
+const texts = {
   kk: {
-    slogan: "Чек жоқ = сенім жоқ",
+    title: "Чек жасау",
     payer: "Төлеуші",
     receiver: "Алушы",
-    amount: "Сома (₸)",
-    create: "Чек жасау",
-    pdf: "PDF жүктеу",
-    status: "✔ Төлем расталды",
-    author: "© 2026 PayFlow — Авторлық жоба<br>Чек жоқ = сенім жоқ",
-    alert: "Барлық жолды толтырыңыз"
+    amount: "Сома (₸)"
   },
   ru: {
-    slogan: "Нет чека — нет доверия",
+    title: "Создать чек",
     payer: "Плательщик",
     receiver: "Получатель",
-    amount: "Сумма (₸)",
-    create: "Создать чек",
-    pdf: "Скачать PDF",
-    status: "✔ Платеж подтвержден",
-    author: "© 2026 PayFlow — Авторский проект",
-    alert: "Заполните все поля"
+    amount: "Сумма (₸)"
   },
   en: {
-    slogan: "No receipt — no trust",
+    title: "Create receipt",
     payer: "Payer",
     receiver: "Receiver",
-    amount: "Amount (₸)",
-    create: "Generate receipt",
-    pdf: "Download PDF",
-    status: "✔ Payment confirmed",
-    author: "© 2026 PayFlow — Original project",
-    alert: "Please fill all fields"
+    amount: "Amount (₸)"
   }
 };
 
-let currentLang = "kk";
-
-function setLang(lang) {
-  currentLang = lang;
-  document.getElementById("slogan").innerHTML = text[lang].slogan;
-  payer.placeholder = text[lang].payer;
-  receiver.placeholder = text[lang].receiver;
-  amount.placeholder = text[lang].amount;
-  btnCreate.innerText = text[lang].create;
-  btnPdf.innerText = text[lang].pdf;
-  status.innerText = text[lang].status;
-  author.innerHTML = text[lang].author;
+function setLang(l) {
+  lang = l;
+  document.getElementById("title").innerText = texts[l].title;
+  payer.placeholder = texts[l].payer;
+  receiver.placeholder = texts[l].receiver;
+  amount.placeholder = texts[l].amount;
 }
 
 function generateCheck() {
   if (!payer.value || !receiver.value || !amount.value) {
-    alert(text[currentLang].alert);
+    alert("Барлық жолды толтырыңыз");
     return;
   }
 
-  const id = "PF-" + Math.floor(Math.random() * 900000);
-  const hash = "H" + Date.now();
+  const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
+  const data = payer.value + receiver.value + amount.value + id;
+  const hash = btoa(data).substring(0, 20);
 
-  rPayer.innerText = payer.value;
-  rReceiver.innerText = receiver.value;
-  rAmount.innerText = amount.value;
-  rId.innerText = id;
-  rHash.innerText = hash;
+  outPayer.innerText = payer.value;
+  outReceiver.innerText = receiver.value;
+  outAmount.innerText = amount.value;
+  checkId.innerText = id;
+  document.getElementById("hash").innerText = hash;
 
-  localStorage.setItem(id, JSON.stringify({ id, hash }));
+  const link = location.origin + location.pathname.replace("index.html","") +
+    "verify.html?id=" + id + "&hash=" + hash;
 
-  qr.innerHTML =
-    `<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${id}">`;
+  qr.src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(link);
 
-  receipt.style.display = "block";
+  localStorage.setItem(id, hash);
+
+  document.getElementById("check").classList.remove("hidden");
 }
 
 function downloadPDF() {
   window.print();
+}
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
 }
