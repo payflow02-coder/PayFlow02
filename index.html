@@ -11,27 +11,32 @@
 <div class="container">
   <div class="card">
 
-    <img src="logo.png" alt="PayFlow логотипі" class="logo">
+    <img src="logo.png" class="logo" alt="PayFlow">
 
     <h1>PayFlow</h1>
     <p class="subtitle">Чек жоқ = сенім жоқ</p>
 
-    <button class="btn" id="generateBtn">Чек жасау</button>
-    <button class="btn secondary" id="pdfBtn">PDF жүктеу</button>
+    <input id="payer" placeholder="Төлеуші (Айбек Қ.)">
+    <input id="receiver" placeholder="Алушы (PayFlow Store)">
+    <input id="amount" type="number" placeholder="Сома (₸)">
 
-    <div class="info">
-      <p><strong>Чек ID:</strong> <span id="checkId">—</span></p>
-      <p><strong>Күні:</strong> <span id="date">—</span></p>
+    <button class="btn" onclick="generateCheck()">Чек жасау</button>
+    <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
+
+    <div class="check">
+      <p><b>Төлеуші:</b> <span id="outPayer">—</span></p>
+      <p><b>Алушы:</b> <span id="outReceiver">—</span></p>
+      <p><b>Сома:</b> <span id="outAmount">—</span></p>
+      <p><b>Чек ID:</b> <span id="outId">—</span></p>
+      <p><b>Hash:</b> <span id="outHash">—</span></p>
+      <p class="status">Төлем расталды</p>
     </div>
 
-    <hr>
+    <div class="qr">
+      <p><b>QR арқылы чек / төлем (demo)</b></p>
+      <img id="qrImg" alt="QR code">
+    </div>
 
-    <h3>Чекті тексеру</h3>
-    <input type="text" id="verifyInput" placeholder="Чек ID енгіз (PF-123456)">
-    <button class="btn small" id="verifyBtn">Тексеру</button>
-    <p id="verifyResult"></p>
-
-    <!-- АВТОРЛЫҚ МӘТІН (МІНЕ ОСЫ ЖЕРДЕ ТҰРАДЫ) -->
     <p class="author">
       © 2026 PayFlow — Авторлық жоба<br>
       Чек жоқ = сенім жоқ
