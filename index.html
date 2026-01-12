@@ -11,27 +11,31 @@
 <div class="container">
   <div class="card">
 
-    <!-- LANGUAGE -->
+    <!-- Language switch -->
     <select id="lang" onchange="setLang(this.value)">
       <option value="kk">KZ</option>
       <option value="ru">RU</option>
       <option value="en">EN</option>
     </select>
 
-    <img src="logo.png" class="logo">
-    <h1 id="title">PayFlow</h1>
+    <img src="logo.png" class="logo" alt="PayFlow logo">
+
+    <h1>PayFlow</h1>
     <p id="slogan">Чек жоқ = сенім жоқ</p>
 
-    <input id="payer" placeholder="Төлеуші">
-    <input id="receiver" placeholder="Алушы">
+    <!-- Inputs -->
+    <input id="payer" type="text" placeholder="Төлеуші">
+    <input id="receiver" type="text" placeholder="Алушы">
     <input id="amount" type="number" placeholder="Сома (₸)">
 
-    <button class="btn" onclick="generateCheck()" id="btnCreate">
+    <!-- Button -->
+    <button class="btn" id="btnCreate" onclick="generateCheck()">
       Чек жасау
     </button>
 
-    <!-- RECEIPT -->
+    <!-- Receipt (hidden initially) -->
     <div id="receipt" class="receipt">
+
       <p><b id="tPayer">Төлеуші:</b> <span id="rPayer"></span></p>
       <p><b id="tReceiver">Алушы:</b> <span id="rReceiver"></span></p>
       <p><b id="tAmount">Сома:</b> <span id="rAmount"></span> ₸</p>
@@ -42,11 +46,12 @@
 
       <div id="qr"></div>
 
-      <button class="btn secondary" onclick="downloadPDF()" id="btnPdf">
+      <button class="btn secondary" id="btnPdf" onclick="downloadPDF()">
         PDF жүктеу
       </button>
     </div>
 
+    <!-- Author -->
     <p class="author" id="author">
       © 2026 PayFlow — Авторлық жоба<br>
       Чек жоқ = сенім жоқ
