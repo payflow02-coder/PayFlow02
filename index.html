@@ -1,56 +1,51 @@
-<!DOCTYPE html>
-<html lang="kk">
-<head>
-  <meta charset="UTF-8">
-  <title>PayFlow — Цифрлық чек</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+function generateCheck() {
+  const payerInput = document.getElementById("payer").value.trim();
+  const receiverInput = document.getElementById("receiver").value.trim();
+  const amountInput = document.getElementById("amount").value.trim();
 
-<div class="container">
-  <div class="card">
+  // 👉 БОС ҚАЛСА — ( )
+  const payer = payerInput === "" ? "( )" : payerInput;
+  const receiver = receiverInput === "" ? "( )" : receiverInput;
+  const amount = amountInput === "" ? "15000 ₸" : amountInput + " ₸";
 
-    <!-- ЛОГО -->
-    <img src="logo.png" alt="PayFlow логотипі" class="logo">
+  const checkId = "PF-" + Math.floor(100000 + Math.random() * 900000);
+  const date = new Date().toISOString();
 
-    <h1>PayFlow</h1>
-    <p class="subtitle">Чек жоқ = сенім жоқ</p>
+  // HASH
+  const rawData = payer + receiver + amount + checkId + date;
+  const hash = simpleHash(rawData);
 
-    <!-- ЕНГІЗУ -->
-    <input type="text" id="payer" placeholder="Төлеуші (Айбек Қ.)">
-    <input type="text" id="receiver" placeholder="Алушы (PayFlow Store)">
-    <input type="number" id="amount" placeholder="Сома (₸)">
+  // ШЫҒАРУ
+  document.getElementById("outPayer").innerText = payer;
+  document.getElementById("outReceiver").innerText = receiver;
+  document.getElementById("outAmount").innerText = amount;
+  document.getElementById("outId").innerText = checkId;
+  document.getElementById("outHash").innerText = hash;
 
-    <!-- БАТЫРМАЛАР -->
-    <button class="btn" onclick="generateCheck()">Чек жасау</button>
-    <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
+  // QR
+  const qrData = `PayFlow чек
+Төлеуші: ${payer}
+Алушы: ${receiver}
+Сома: ${amount}
+ID: ${checkId}
+Hash: ${hash}`;
 
-    <!-- ЧЕК НӘТИЖЕСІ -->
-    <div class="check">
-      <p><strong>Төлеуші:</strong> <span id="outPayer">—</span></p>
-      <p><strong>Алушы:</strong> <span id="outReceiver">—</span></p>
-      <p><strong>Сома:</strong> <span id="outAmount">—</span></p>
-      <p><strong>Чек ID:</strong> <span id="outId">—</span></p>
-      <p><strong>Hash:</strong> <span id="outHash">—</span></p>
-      <p class="status">Төлем расталды</p>
-    </div>
+  document.getElementById("qrImg").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+    encodeURIComponent(qrData);
+}
 
-    <!-- QR -->
-    <div class="qr">
-      <p><strong>QR арқылы чек / төлем (demo)</strong></p>
-      <img id="qrImg" alt="QR код">
-    </div>
+// Қарапайым hash (авторлық логика)
+function simpleHash(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return "H" + Math.abs(hash);
+}
 
-    <!-- АВТОРЛЫҚ -->
-    <p class="author">
-      © 2026 PayFlow — Авторлық жоба<br>
-      Чек жоқ = сенім жоқ
-    </p>
-
-  </div>
-</div>
-
-<script src="script.js"></script>
-</body>
-</html>
+// PDF
+function downloadPDF() {
+  window.print();
+}
