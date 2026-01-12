@@ -1,60 +1,21 @@
 <!DOCTYPE html>
-<html lang="kk">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>PayFlow — Чекті тексеру</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <title>Verify</title>
 </head>
 <body>
-
-<div class="container">
-  <div class="card">
-
-    <h2>Чекті тексеру</h2>
-
-    <input id="checkInput" placeholder="Чек ID енгіз (PF-123456)">
-    <button class="btn" onclick="verifyCheck()">Тексеру</button>
-
-    <div id="result" style="margin-top:15px;"></div>
-
-    <p class="author">
-      PayFlow Verify System<br>
-      © 2026
-    </p>
-
-  </div>
-</div>
+<h2>Чек тексеру</h2>
+<p id="result"></p>
 
 <script>
-function verifyCheck() {
-  const id = document.getElementById("checkInput").value.trim();
-  const result = document.getElementById("result");
+const p = new URLSearchParams(location.search);
+const id = p.get("id");
+const hash = p.get("hash");
+const saved = localStorage.getItem(id);
 
-  if (!id) {
-    result.innerHTML = "<p style='color:red'>Чек ID енгізіңіз</p>";
-    return;
-  }
-
-  const data = localStorage.getItem(id);
-
-  if (!data) {
-    result.innerHTML = "<p style='color:red'>❌ Жалған немесе жоқ чек</p>";
-    return;
-  }
-
-  const чек = JSON.parse(data);
-
-  result.innerHTML = `
-    <p><b>Төлеуші:</b> ${чек.payer}</p>
-    <p><b>Алушы:</b> ${чек.receiver}</p>
-    <p><b>Сома:</b> ${чек.amount} ₸</p>
-    <p><b>Чек ID:</b> ${чек.checkId}</p>
-    <p><b>Hash:</b> ${чек.hash}</p>
-    <p style="color:green;font-weight:bold">✔ Төлем расталды</p>
-  `;
-}
+document.getElementById("result").innerText =
+  saved === hash ? "✅ Чек расталды" : "❌ Жалған чек";
 </script>
-
 </body>
 </html>
