@@ -3,7 +3,7 @@ function generateCheck() {
   const receiverInput = document.getElementById("receiver").value.trim();
   const amountInput = document.getElementById("amount").value.trim();
 
-  // 👉 БОС ҚАЛСА — ( )
+  // БОС ҚАЛСА — ( )
   const payer = payerInput === "" ? "( )" : payerInput;
   const receiver = receiverInput === "" ? "( )" : receiverInput;
   const amount = amountInput === "" ? "15000 ₸" : amountInput + " ₸";
@@ -11,18 +11,15 @@ function generateCheck() {
   const checkId = "PF-" + Math.floor(100000 + Math.random() * 900000);
   const date = new Date().toISOString();
 
-  // HASH
   const rawData = payer + receiver + amount + checkId + date;
   const hash = simpleHash(rawData);
 
-  // ШЫҒАРУ
   document.getElementById("outPayer").innerText = payer;
   document.getElementById("outReceiver").innerText = receiver;
   document.getElementById("outAmount").innerText = amount;
   document.getElementById("outId").innerText = checkId;
   document.getElementById("outHash").innerText = hash;
 
-  // QR
   const qrData = `PayFlow чек
 Төлеуші: ${payer}
 Алушы: ${receiver}
@@ -35,7 +32,6 @@ Hash: ${hash}`;
     encodeURIComponent(qrData);
 }
 
-// Қарапайым hash (авторлық логика)
 function simpleHash(str) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -45,7 +41,6 @@ function simpleHash(str) {
   return "H" + Math.abs(hash);
 }
 
-// PDF
 function downloadPDF() {
   window.print();
 }
