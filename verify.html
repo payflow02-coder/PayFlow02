@@ -1,21 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="kk">
 <head>
   <meta charset="UTF-8">
-  <title>Verify</title>
+  <title>Чек тексеру</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+    }
+    .card {
+      max-width: 360px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.1);
+    }
+    .ok {
+      color: green;
+      font-weight: bold;
+    }
+    .bad {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-<h2>Чек тексеру</h2>
-<p id="result"></p>
+
+<div class="card">
+  <h2>Чек тексеру</h2>
+  <p id="result">Тексерілуде...</p>
+</div>
 
 <script>
-const p = new URLSearchParams(location.search);
-const id = p.get("id");
-const hash = p.get("hash");
-const saved = localStorage.getItem(id);
+  // URL параметрлерін алу
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  const hash = params.get("hash");
 
-document.getElementById("result").innerText =
-  saved === hash ? "✅ Чек расталды" : "❌ Жалған чек";
+  const result = document.getElementById("result");
+
+  if (!id || !hash) {
+    result.innerText = "❌ Чек деректері табылмады";
+    result.className = "bad";
+  } else {
+    const savedHash = localStorage.getItem(id);
+
+    if (savedHash === hash) {
+      result.innerText = "✅ Чек расталды";
+      result.className = "ok";
+    } else {
+      result.innerText = "❌ Жалған немесе жарамсыз чек";
+      result.className = "bad";
+    }
+  }
 </script>
+
 </body>
 </html>
