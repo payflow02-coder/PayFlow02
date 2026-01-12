@@ -1,44 +1,45 @@
 function generateCheck() {
-  const payerInput = document.getElementById("payer").value.trim();
-  const receiverInput = document.getElementById("receiver").value.trim();
-  const amountInput = document.getElementById("amount").value.trim();
+  const payer = document.getElementById("payer").value.trim();
+  const receiver = document.getElementById("receiver").value.trim();
+  const amount = document.getElementById("amount").value.trim();
 
-  // БОС ҚАЛСА — ( )
-  const payer = payerInput === "" ? "( )" : payerInput;
-  const receiver = receiverInput === "" ? "( )" : receiverInput;
-  const amount = amountInput === "" ? "15000 ₸" : amountInput + " ₸";
+  if (!payer || !receiver || !amount) {
+    alert("Барлық жолды толтырыңыз!");
+    return;
+  }
 
-  const checkId = "PF-" + Math.floor(100000 + Math.random() * 900000);
-  const date = new Date().toISOString();
+  const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
+  const hash = "H" + Date.now();
 
-  const rawData = payer + receiver + amount + checkId + date;
-  const hash = simpleHash(rawData);
+  const checkData = {
+    payer,
+    receiver,
+    amount,
+    id,
+    hash,
+    status: "Төлем расталды",
+    date: new Date().toISOString()
+  };
+
+  // 🔐 "Сервер" (localStorage)
+  localStorage.setItem(id, JSON.stringify(checkData));
 
   document.getElementById("outPayer").innerText = payer;
   document.getElementById("outReceiver").innerText = receiver;
   document.getElementById("outAmount").innerText = amount;
-  document.getElementById("outId").innerText = checkId;
-  document.getElementById("outHash").innerText = hash;
+  document.getElementById("checkId").innerText = id;
+  document.getElementById("hash").innerText = hash;
 
-  const qrData = `PayFlow чек
-Төлеуші: ${payer}
-Алушы: ${receiver}
-Сома: ${amount}
-ID: ${checkId}
-Hash: ${hash}`;
+  // 🔗 QR тексеру бетіне апарады
+  const verifyURL =
+    location.origin +
+    location.pathname.replace("index.html", "") +
+    "verify.html?id=" + id + "&hash=" + hash;
 
-  document.getElementById("qrImg").src =
-    "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
-    encodeURIComponent(qrData);
-}
+  document.getElementById("qr").innerHTML =
+    `<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(verifyURL)}">`;
 
-function simpleHash(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = (hash << 5) - hash + str.charCodeAt(i);
-    hash |= 0;
-  }
-  return "H" + Math.abs(hash);
+  document.getElementById("checkBox").classList.remove("hidden");
 }
 
 function downloadPDF() {
