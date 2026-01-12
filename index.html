@@ -4,52 +4,46 @@
   <meta charset="UTF-8">
   <title>PayFlow</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-  <div class="card">
+<div class="lang-switch">
+  <button onclick="setLang('kk')">KZ</button>
+  <button onclick="setLang('ru')">RU</button>
+  <button onclick="setLang('en')">EN</button>
+</div>
 
-    <!-- Language -->
-    <select id="lang">
-      <option value="kk">KZ</option>
-      <option value="ru">RU</option>
-      <option value="en">EN</option>
-    </select>
+<div class="card">
+  <img src="logo.png" class="logo">
 
-    <img src="logo.png" class="logo" alt="PayFlow">
+  <h1 id="title">Чек жасау</h1>
 
-    <h1>PayFlow</h1>
-    <p id="slogan">Чек жоқ = сенім жоқ</p>
+  <input id="payer" placeholder="Төлеуші">
+  <input id="receiver" placeholder="Алушы">
+  <input id="amount" type="number" placeholder="Сома (₸)">
 
-    <input id="payer" type="text" placeholder="Төлеуші">
-    <input id="receiver" type="text" placeholder="Алушы">
-    <input id="amount" type="number" placeholder="Сома (₸)">
+  <button class="btn" onclick="generateCheck()">Чек жасау</button>
 
-    <button class="btn" id="createBtn">Чек жасау</button>
+  <!-- ЧЕК (БАСТАПҚЫДА ЖАСЫРЫН) -->
+  <div id="check" class="hidden">
+    <p><b>Төлеуші:</b> <span id="outPayer"></span></p>
+    <p><b>Алушы:</b> <span id="outReceiver"></span></p>
+    <p><b>Сома:</b> <span id="outAmount"></span> ₸</p>
+    <p><b>Чек ID:</b> <span id="checkId"></span></p>
+    <p><b>Hash:</b> <span id="hash"></span></p>
+    <p class="status">Төлем расталды</p>
 
-    <!-- RECEIPT -->
-    <div id="receipt" class="receipt">
-      <p><b id="lPayer">Төлеуші:</b> <span id="rPayer"></span></p>
-      <p><b id="lReceiver">Алушы:</b> <span id="rReceiver"></span></p>
-      <p><b id="lAmount">Сома:</b> <span id="rAmount"></span> ₸</p>
-      <p><b>Check ID:</b> <span id="rId"></span></p>
-      <p><b>Hash:</b> <span id="rHash"></span></p>
+    <img id="qr" class="qr">
 
-      <p class="success" id="status">✔ Төлем расталды</p>
-
-      <div id="qr"></div>
-
-      <button class="btn secondary" id="pdfBtn">PDF жүктеу</button>
-    </div>
-
-    <p class="author" id="author">
-      © 2026 PayFlow — Авторлық жоба<br>
-      Чек жоқ = сенім жоқ
-    </p>
-
+    <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
   </div>
+
+  <p class="author">
+    © 2026 PayFlow — Авторлық жоба<br>
+    Чек жоқ = сенім жоқ
+  </p>
 </div>
 
 <script src="script.js"></script>
