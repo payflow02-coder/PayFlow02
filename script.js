@@ -1,64 +1,67 @@
 let lang = "kk";
 
-const texts = {
+const T = {
   kk: {
     title: "Чек жасау",
     payer: "Төлеуші",
     receiver: "Алушы",
-    amount: "Сома (₸)"
+    amount: "Сома (₸)",
+    btn: "Чек жасау",
+    alert: "Барлық жолды толтырыңыз",
+    status: "Төлем расталды"
   },
   ru: {
     title: "Создать чек",
     payer: "Плательщик",
     receiver: "Получатель",
-    amount: "Сумма (₸)"
+    amount: "Сумма (₸)",
+    btn: "Создать чек",
+    alert: "Заполните все поля",
+    status: "Платеж подтвержден"
   },
   en: {
     title: "Create receipt",
     payer: "Payer",
     receiver: "Receiver",
-    amount: "Amount (₸)"
+    amount: "Amount (₸)",
+    btn: "Create receipt",
+    alert: "Fill all fields",
+    status: "Payment confirmed"
   }
 };
 
 function setLang(l) {
   lang = l;
-  document.getElementById("title").innerText = texts[l].title;
-  payer.placeholder = texts[l].payer;
-  receiver.placeholder = texts[l].receiver;
-  amount.placeholder = texts[l].amount;
+  title.innerText = T[l].title;
+  payer.placeholder = T[l].payer;
+  receiver.placeholder = T[l].receiver;
+  amount.placeholder = T[l].amount;
+  btn.innerText = T[l].btn;
+  status.innerText = T[l].status;
 }
 
 function generateCheck() {
   if (!payer.value || !receiver.value || !amount.value) {
-    alert("Барлық жолды толтырыңыз");
+    alert(T[lang].alert);
     return;
   }
 
   const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
-  const data = payer.value + receiver.value + amount.value + id;
-  const hash = btoa(data).substring(0, 20);
+  const hash = btoa(payer.value + receiver.value + amount.value + id).slice(0, 16);
 
-  outPayer.innerText = payer.value;
-  outReceiver.innerText = receiver.value;
-  outAmount.innerText = amount.value;
+  oPayer.innerText = payer.value;
+  oReceiver.innerText = receiver.value;
+  oAmount.innerText = amount.value;
   checkId.innerText = id;
   document.getElementById("hash").innerText = hash;
 
-  const link = location.origin + location.pathname.replace("index.html","") +
-    "verify.html?id=" + id + "&hash=" + hash;
+  qr.src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+    encodeURIComponent("PayFlow чек " + id);
 
-  qr.src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(link);
-
-  localStorage.setItem(id, hash);
-
-  document.getElementById("check").classList.remove("hidden");
+  receipt.classList.remove("hidden");
 }
 
 function downloadPDF() {
   window.print();
-}
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
 }
