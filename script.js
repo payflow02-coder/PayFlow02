@@ -1,93 +1,58 @@
-let LANG = "kk";
+script.js      function generateCheck() {
+  vibrate();
 
-const TEXT = {
-  kk: {
-    title: "Цифрлық чек жасау",
-    desc: "Төлем жасалғанын дәлелдейтін цифрлық чек.<br>ID, Hash және QR арқылы қорғалған.",
-    payer: "Төлеуші",
-    receiver: "Алушы",
-    amount: "Сома (₸)",
-    create: "Чек жасау",
-    pdf: "PDF жүктеу",
-    status: "Төлем расталды",
-    alert: "Барлық жолды толтырыңыз"
-  },
-  ru: {
-    title: "Создание цифрового чека",
-    desc: "Цифровой чек для подтверждения платежа.<br>Защищён ID, Hash и QR.",
-    payer: "Плательщик",
-    receiver: "Получатель",
-    amount: "Сумма (₸)",
-    create: "Создать чек",
-    pdf: "Скачать PDF",
-    status: "Платёж подтверждён",
-    alert: "Заполните все поля"
-  },
-  en: {
-    title: "Create digital receipt",
-    desc: "Digital receipt to confirm payments.<br>Protected by ID, Hash and QR.",
-    payer: "Payer",
-    receiver: "Receiver",
-    amount: "Amount (₸)",
-    create: "Create receipt",
-    pdf: "Download PDF",
-    status: "Payment confirmed",
-    alert: "Please fill all fields"
-  }
-};
+  const payer = payerVal();
+  const receiver = receiverVal();
+  const amount = amountVal();
 
-function setLang(l) {
-  LANG = l;
-  document.getElementById("t_title").innerText = TEXT[l].title;
-  document.getElementById("t_desc").innerHTML = TEXT[l].desc;
-  document.getElementById("payer").placeholder = TEXT[l].payer;
-  document.getElementById("receiver").placeholder = TEXT[l].receiver;
-  document.getElementById("amount").placeholder = TEXT[l].amount;
-  document.getElementById("t_btn_create").innerText = TEXT[l].create;
-  document.getElementById("t_btn_pdf").innerText = TEXT[l].pdf;
-  document.getElementById("t_status").innerText = TEXT[l].status;
-}
-
-// UTF-8 SAFE HASH
-function makeHash(str) {
-  return crypto.subtle.digest(
-    "SHA-256",
-    new TextEncoder().encode(str)
-  ).then(buf =>
-    Array.from(new Uint8Array(buf))
-      .map(b => b.toString(16).padStart(2, "0"))
-      .join("")
-      .slice(0, 24)
-  );
-}
-
-async function generateCheck() {
-  const p = payer.value.trim();
-  const r = receiver.value.trim();
-  const a = amount.value.trim();
-
-  if (!p || !r || !a) {
-    alert(TEXT[LANG].alert);
+  if (!payer || !receiver || !amount) {
+    alert("Барлық жолды толтырыңыз!");
     return;
   }
 
-  outPayer.innerText = p;
-  outReceiver.innerText = r;
-  outAmount.innerText = a;
-
   const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
-  checkId.innerText = id;
+  const hash = "H" + Date.now();
 
-  const raw = `${p}|${r}|${a}|${id}`;
-  hash.innerText = await makeHash(raw);
+  const data = { payer, receiver, amount, id, hash };
+  localStorage.setItem(id, JSON.stringify(data));
 
-  qr.innerHTML = `
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(id)}">
-  `;
+  out("outPayer", payer);
+  out("outReceiver", receiver);
+  out("outAmount", amount);
+  out("checkId", id);
+  out("hash", hash);
 
-  checkBox.classList.remove("hidden");
+  document.getElementById("qr").innerHTML =
+    `<img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(id + "|" + hash)}">`;
+
+  document.getElementById("checkBox").classList.remove("hidden");
+}
+
+function verifyCheck() {
+  const id = document.getElementById("vid").value.trim();
+  const hash = document.getElementById("vhash").value.trim();
+  const box = document.getElementById("verifyResult");
+
+  const data = localStorage.getItem(id);
+  if (!data) {
+    box.innerHTML = "❌ Чек табылмады";
+    return;
+  }
+
+  const check = JSON.parse(data);
+  box.innerHTML =
+    check.hash === hash
+      ? "✅ Чек расталды"
+      : "❌ Hash сәйкес емес";
 }
 
 function downloadPDF() {
   window.print();
 }
+
+/* helpers */
+function out(id, v){ document.getElementById(id).innerText = v; }
+function payerVal(){ return document.getElementById("payer").value.trim(); }
+function receiverVal(){ return document.getElementById("receiver").value.trim(); }
+function amountVal(){ return document.getElementById("amount").value.trim(); }
+function vibrate(){ if (navigator.vibrate) navigator.vibrate(30); }
