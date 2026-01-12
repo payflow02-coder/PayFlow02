@@ -1,7 +1,8 @@
 {
   "name": "PayFlow",
   "short_name": "PayFlow",
-  "start_url": ".",
+  "description": "PayFlow — цифрлық чек жасауға арналған demo веб-сайт",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
