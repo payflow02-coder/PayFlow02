@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<!-- ТІЛ АУЫСТЫРУ -->
 <div class="lang-switch">
   <button onclick="setLang('kk')">KZ</button>
   <button onclick="setLang('ru')">RU</button>
@@ -16,7 +17,7 @@
 
 <div class="card">
 
-  <img src="logo.png" class="logo">
+  <img src="logo.png" class="logo" alt="PayFlow logo">
 
   <h1 id="t_title">Цифрлық чек жасау</h1>
 
@@ -25,26 +26,30 @@
     ID, Hash және QR арқылы қорғалған.
   </p>
 
-  <input id="payer" placeholder="Төлеуші">
-  <input id="receiver" placeholder="Алушы">
+  <!-- INPUTS -->
+  <input id="payer" type="text" placeholder="Төлеуші">
+  <input id="receiver" type="text" placeholder="Алушы">
   <input id="amount" type="number" placeholder="Сома (₸)">
 
-  <button class="btn" onclick="generateCheck()" id="t_btn_create">
+  <!-- BUTTONS -->
+  <button class="btn" id="t_btn_create" onclick="generateCheck()">
     Чек жасау
   </button>
 
-  <button class="btn secondary" onclick="downloadPDF()" id="t_btn_pdf">
+  <button class="btn secondary" id="t_btn_pdf" onclick="downloadPDF()">
     PDF жүктеу
   </button>
 
-  <!-- ЧЕК (АЛҒАШЫНДА ЖАСЫРЫН) -->
+  <!-- ЧЕК (БАСЫНДА ЖАСЫРЫН) -->
   <div id="checkBox" class="check hidden">
-    <p><b id="l_payer">Төлеуші:</b> <span id="outPayer"></span></p>
-    <p><b id="l_receiver">Алушы:</b> <span id="outReceiver"></span></p>
-    <p><b id="l_amount">Сома:</b> <span id="outAmount"></span> ₸</p>
+    <p><b>Төлеуші:</b> <span id="outPayer"></span></p>
+    <p><b>Алушы:</b> <span id="outReceiver"></span></p>
+    <p><b>Сома:</b> <span id="outAmount"></span> ₸</p>
     <p><b>Check ID:</b> <span id="checkId"></span></p>
     <p><b>Hash:</b> <span id="hash"></span></p>
+
     <p class="success" id="t_status">Төлем расталды</p>
+
     <div id="qr"></div>
   </div>
 
