@@ -1,49 +1,101 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8">
-  <title>PayFlow</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>PayFlow</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+}
+.card {
+  max-width: 360px;
+  margin: 30px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,.1);
+}
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+}
+button {
+  width: 100%;
+  padding: 12px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.hidden {
+  display: none;
+}
+.ok {
+  color: green;
+  font-weight: bold;
+}
+.author {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 15px;
+}
+</style>
 </head>
+
 <body>
 
-<div class="lang">
-  <button onclick="setLang('kk')">KZ</button>
-  <button onclick="setLang('ru')">RU</button>
-  <button onclick="setLang('en')">EN</button>
-</div>
-
 <div class="card">
-  <img src="logo.png" class="logo">
-
-  <h1 id="title">Чек жасау</h1>
+  <h1>Чек жасау</h1>
 
   <input id="payer" placeholder="Төлеуші">
   <input id="receiver" placeholder="Алушы">
-  <input id="amount" type="number" placeholder="Сома (₸)">
+  <input id="amount" type="number" placeholder="Сома">
 
-  <button id="btn" class="btn" onclick="generateCheck()">Чек жасау</button>
+  <button onclick="generateCheck()">Чек жасау</button>
 
   <div id="receipt" class="hidden">
-    <p><b id="lpayer">Төлеуші:</b> <span id="oPayer"></span></p>
-    <p><b id="lreceiver">Алушы:</b> <span id="oReceiver"></span></p>
-    <p><b id="lamount">Сома:</b> <span id="oAmount"></span> ₸</p>
-    <p><b>Check ID:</b> <span id="checkId"></span></p>
-    <p><b>Hash:</b> <span id="hash"></span></p>
-    <p class="ok" id="status">Төлем расталды</p>
-
-    <img id="qr">
-
-    <button class="btn gray" onclick="downloadPDF()">PDF</button>
+    <p><b>Төлеуші:</b> <span id="oPayer"></span></p>
+    <p><b>Алушы:</b> <span id="oReceiver"></span></p>
+    <p><b>Сома:</b> <span id="oAmount"></span></p>
+    <p><b>Чек ID:</b> <span id="checkId"></span></p>
+    <p class="ok">Төлем расталды</p>
   </div>
 
-  <p class="author">
+  <div class="author">
     © 2026 PayFlow<br>
     Чек жоқ = сенім жоқ
-  </p>
+  </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+function generateCheck() {
+  const payer = document.getElementById("payer").value.trim();
+  const receiver = document.getElementById("receiver").value.trim();
+  const amount = document.getElementById("amount").value.trim();
+
+  if (!payer || !receiver || !amount) {
+    alert("Барлық жолды толтырыңыз");
+    return;
+  }
+
+  document.getElementById("oPayer").innerText = payer;
+  document.getElementById("oReceiver").innerText = receiver;
+  document.getElementById("oAmount").innerText = amount;
+  document.getElementById("checkId").innerText =
+    "PF-" + Math.floor(100000 + Math.random() * 900000);
+
+  document.getElementById("receipt").classList.remove("hidden");
+}
+</script>
+
 </body>
 </html>
