@@ -153,3 +153,26 @@ footer {
   input { background: #020617; color: white; border-color: #334155; }
   footer { background: black; }
 }
+/* LANGUAGE SWITCH */
+.lang-switch {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 9999;
+  display: flex;
+  gap: 6px;
+}
+
+.lang-switch button {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.9);
+  color: #111;
+}
+
+.lang-switch button:hover {
+  background: #e5e7eb;
+}
