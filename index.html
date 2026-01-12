@@ -2,79 +2,58 @@
 <html lang="kk">
 <head>
   <meta charset="UTF-8">
-  <title>PayFlow — Цифрлық чек</title>
+  <title>PayFlow — Digital Receipt</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2563eb">
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <img src="logo.png" class="hero-logo">
-  <h1>PayFlow</h1>
-  <p class="hero-text">
-    Төлем жасалғанын дәлелдейтін цифрлық чек сервисі.  
+<div class="lang-switch">
+  <button onclick="setLang('kk')">KZ</button>
+  <button onclick="setLang('ru')">RU</button>
+  <button onclick="setLang('en')">EN</button>
+</div>
+
+<div class="card">
+
+  <img src="logo.png" class="logo">
+
+  <h1 id="t_title">Цифрлық чек жасау</h1>
+
+  <p id="t_desc">
+    Төлем жасалғанын дәлелдейтін цифрлық чек.<br>
     ID, Hash және QR арқылы қорғалған.
   </p>
-  <a href="#service" class="btn big">Чек жасау</a>
-</section>
 
-<!-- FEATURES -->
-<section class="features">
-  <h2>Неге PayFlow?</h2>
-  <ul>
-    <li>✔ Өзгертілмейтін чек</li>
-    <li>✔ Бірегей ID + Hash</li>
-    <li>✔ QR арқылы тексеру</li>
-    <li>✔ Қағаз чек қажет емес</li>
-  </ul>
-</section>
+  <input id="payer" placeholder="Төлеуші">
+  <input id="receiver" placeholder="Алушы">
+  <input id="amount" type="number" placeholder="Сома (₸)">
 
-<!-- SERVICE -->
-<section id="service" class="service">
-  <div class="card">
+  <button class="btn" onclick="generateCheck()" id="t_btn_create">
+    Чек жасау
+  </button>
 
-    <h2>Цифрлық чек жасау</h2>
+  <button class="btn secondary" onclick="downloadPDF()" id="t_btn_pdf">
+    PDF жүктеу
+  </button>
 
-    <input id="payer" placeholder="Төлеуші">
-    <input id="receiver" placeholder="Алушы">
-    <input id="amount" type="number" placeholder="Сома (₸)">
-
-    <button class="btn" onclick="generateCheck()">Чек жасау</button>
-    <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
-
-    <div id="checkBox" class="check hidden">
-      <p><b>Төлеуші:</b> <span id="outPayer"></span></p>
-      <p><b>Алушы:</b> <span id="outReceiver"></span></p>
-      <p><b>Сома:</b> <span id="outAmount"></span> ₸</p>
-      <p><b>Чек ID:</b> <span id="checkId"></span></p>
-      <p><b>Hash:</b> <span id="hash"></span></p>
-
-      <p class="success">✅ Төлем расталды</p>
-      <p class="secure">Бұл чек PayFlow жүйесінде тіркелген және өзгертілмейді</p>
-
-      <div id="qr"></div>
-    </div>
-
+  <!-- ЧЕК (АЛҒАШЫНДА ЖАСЫРЫН) -->
+  <div id="checkBox" class="check hidden">
+    <p><b id="l_payer">Төлеуші:</b> <span id="outPayer"></span></p>
+    <p><b id="l_receiver">Алушы:</b> <span id="outReceiver"></span></p>
+    <p><b id="l_amount">Сома:</b> <span id="outAmount"></span> ₸</p>
+    <p><b>Check ID:</b> <span id="checkId"></span></p>
+    <p><b>Hash:</b> <span id="hash"></span></p>
+    <p class="success" id="t_status">Төлем расталды</p>
+    <div id="qr"></div>
   </div>
-</section>
 
-<!-- VERIFY -->
-<section class="verify">
-  <h2>Чекті тексеру</h2>
-  <input id="vid" placeholder="Чек ID">
-  <input id="vhash" placeholder="Hash">
-  <button class="btn" onclick="verifyCheck()">Тексеру</button>
-  <div id="verifyResult"></div>
-</section>
+  <p class="author">
+    © 2026 PayFlow — Авторлық жоба<br>
+    Чек жоқ = сенім жоқ
+  </p>
 
-<!-- FOOTER -->
-<footer>
-  <p>© 2026 PayFlow — Авторлық жоба</p>
-  <p class="demo">Бұл сайт — демонстрациялық прототип. Нақты төлем қабылдамайды.</p>
-</footer>
+</div>
 
 <script src="script.js"></script>
 </body>
