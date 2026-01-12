@@ -16,29 +16,37 @@ body {
 }
 
 .card {
-  background: white;
   width: 360px;
-  padding: 25px;
+  background: #fff;
+  padding: 24px;
   border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
 
 .logo {
   width: 80px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .subtitle {
   font-size: 14px;
   color: #6b7280;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
 }
 
 .btn {
   width: 100%;
   padding: 12px;
-  margin-top: 10px;
+  margin-top: 12px;
   border: none;
   border-radius: 10px;
   background: #2563eb;
@@ -47,45 +55,39 @@ body {
   cursor: pointer;
 }
 
-.btn:hover {
-  opacity: 0.9;
-}
-
 .secondary {
   background: #e5e7eb;
   color: #111;
 }
 
-.secondary:hover {
-  background: #d1d5db;
-}
-
-.small {
+.check {
+  margin-top: 16px;
+  text-align: left;
   font-size: 14px;
 }
 
-.info {
-  margin-top: 15px;
-  text-align: left;
+.status {
+  margin-top: 6px;
+  color: #16a34a;
+  font-weight: bold;
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
+.qr img {
+  width: 140px;
+  margin-top: 8px;
 }
 
-hr {
-  margin: 20px 0;
-}
-
-/* АВТОРЛЫҚ — МІНДЕТТІ КӨРІНЕДІ */
 .author {
-  display: block;
-  margin-top: 20px;
+  margin-top: 18px;
   font-size: 12px;
   color: #6b7280;
-  text-align: center;
+}
+
+@media print {
+  button, input {
+    display: none;
+  }
+  body {
+    background: white;
+  }
 }
