@@ -4,12 +4,11 @@
   <meta charset="UTF-8">
   <title>PayFlow</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="lang-switch">
+<div class="lang">
   <button onclick="setLang('kk')">KZ</button>
   <button onclick="setLang('ru')">RU</button>
   <button onclick="setLang('en')">EN</button>
@@ -24,24 +23,23 @@
   <input id="receiver" placeholder="Алушы">
   <input id="amount" type="number" placeholder="Сома (₸)">
 
-  <button class="btn" onclick="generateCheck()">Чек жасау</button>
+  <button id="btn" class="btn" onclick="generateCheck()">Чек жасау</button>
 
-  <!-- ЧЕК (БАСТАПҚЫДА ЖАСЫРЫН) -->
-  <div id="check" class="hidden">
-    <p><b>Төлеуші:</b> <span id="outPayer"></span></p>
-    <p><b>Алушы:</b> <span id="outReceiver"></span></p>
-    <p><b>Сома:</b> <span id="outAmount"></span> ₸</p>
-    <p><b>Чек ID:</b> <span id="checkId"></span></p>
+  <div id="receipt" class="hidden">
+    <p><b id="lpayer">Төлеуші:</b> <span id="oPayer"></span></p>
+    <p><b id="lreceiver">Алушы:</b> <span id="oReceiver"></span></p>
+    <p><b id="lamount">Сома:</b> <span id="oAmount"></span> ₸</p>
+    <p><b>Check ID:</b> <span id="checkId"></span></p>
     <p><b>Hash:</b> <span id="hash"></span></p>
-    <p class="status">Төлем расталды</p>
+    <p class="ok" id="status">Төлем расталды</p>
 
-    <img id="qr" class="qr">
+    <img id="qr">
 
-    <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
+    <button class="btn gray" onclick="downloadPDF()">PDF</button>
   </div>
 
   <p class="author">
-    © 2026 PayFlow — Авторлық жоба<br>
+    © 2026 PayFlow<br>
     Чек жоқ = сенім жоқ
   </p>
 </div>
