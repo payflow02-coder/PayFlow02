@@ -1,58 +1,75 @@
- function generateCheck() {
-  vibrate();
+let LANG = "kk";
 
-  const payer = payerVal();
-  const receiver = receiverVal();
-  const amount = amountVal();
-
-  if (!payer || !receiver || !amount) {
-    alert("Барлық жолды толтырыңыз!");
-    return;
+const TEXT = {
+  kk: {
+    title: "Цифрлық чек жасау",
+    desc: "Төлем жасалғанын дәлелдейтін цифрлық чек.<br>ID, Hash және QR арқылы қорғалған.",
+    payer: "Төлеуші",
+    receiver: "Алушы",
+    amount: "Сома (₸)",
+    create: "Чек жасау",
+    pdf: "PDF жүктеу",
+    status: "Төлем расталды",
+    alert: "Барлық жолды толтырыңыз"
+  },
+  ru: {
+    title: "Создание цифрового чека",
+    desc: "Цифровой чек для подтверждения платежа.<br>Защищён ID, Hash и QR.",
+    payer: "Плательщик",
+    receiver: "Получатель",
+    amount: "Сумма (₸)",
+    create: "Создать чек",
+    pdf: "Скачать PDF",
+    status: "Платёж подтверждён",
+    alert: "Заполните все поля"
+  },
+  en: {
+    title: "Create digital receipt",
+    desc: "Digital receipt to confirm payments.<br>Protected by ID, Hash and QR.",
+    payer: "Payer",
+    receiver: "Receiver",
+    amount: "Amount (₸)",
+    create: "Create receipt",
+    pdf: "Download PDF",
+    status: "Payment confirmed",
+    alert: "Please fill all fields"
   }
+};
 
-  const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
-  const hash = "H" + Date.now();
-
-  const data = { payer, receiver, amount, id, hash };
-  localStorage.setItem(id, JSON.stringify(data));
-
-  out("outPayer", payer);
-  out("outReceiver", receiver);
-  out("outAmount", amount);
-  out("checkId", id);
-  out("hash", hash);
-
-  document.getElementById("qr").innerHTML =
-    `<img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(id + "|" + hash)}">`;
-
-  document.getElementById("checkBox").classList.remove("hidden");
+function setLang(l) {
+  LANG = l;
+  t_title.innerText = TEXT[l].title;
+  t_desc.innerHTML = TEXT[l].desc;
+  payer.placeholder = TEXT[l].payer;
+  receiver.placeholder = TEXT[l].receiver;
+  amount.placeholder = TEXT[l].amount;
+  t_btn_create.innerText = TEXT[l].create;
+  t_btn_pdf.innerText = TEXT[l].pdf;
+  t_status.innerText = TEXT[l].status;
 }
 
-function verifyCheck() {
-  const id = document.getElementById("vid").value.trim();
-  const hash = document.getElementById("vhash").value.trim();
-  const box = document.getElementById("verifyResult");
-
-  const data = localStorage.getItem(id);
-  if (!data) {
-    box.innerHTML = "❌ Чек табылмады";
+function generateCheck() {
+  if (!payer.value || !receiver.value || !amount.value) {
+    alert(TEXT[LANG].alert);
     return;
   }
 
-  const check = JSON.parse(data);
-  box.innerHTML =
-    check.hash === hash
-      ? "✅ Чек расталды"
-      : "❌ Hash сәйкес емес";
+  outPayer.innerText = payer.value;
+  outReceiver.innerText = receiver.value;
+  outAmount.innerText = amount.value;
+
+  const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
+  checkId.innerText = id;
+
+  const raw = payer.value + receiver.value + amount.value + id;
+  hash.innerText = btoa(raw).slice(0, 20);
+
+  qr.innerHTML =
+    `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${id}">`;
+
+  checkBox.classList.remove("hidden");
 }
 
 function downloadPDF() {
   window.print();
 }
-
-/* helpers */
-function out(id, v){ document.getElementById(id).innerText = v; }
-function payerVal(){ return document.getElementById("payer").value.trim(); }
-function receiverVal(){ return document.getElementById("receiver").value.trim(); }
-function amountVal(){ return document.getElementById("amount").value.trim(); }
-function vibrate(){ if (navigator.vibrate) navigator.vibrate(30); }
