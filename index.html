@@ -4,31 +4,42 @@
   <meta charset="UTF-8">
   <title>PayFlow — Цифрлық чек</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#2563eb">
 </head>
 <body>
 
+<!-- LANGUAGE SWITCH -->
+<div class="lang-switch" style="text-align:center; padding:10px;">
+  <button onclick="setLang('kk')">KZ</button>
+  <button onclick="setLang('ru')">RU</button>
+  <button onclick="setLang('en')">EN</button>
+</div>
+
 <!-- HERO -->
 <section class="hero">
-  <img src="logo.png" class="hero-logo">
-  <h1>PayFlow</h1>
-  <p class="hero-text">
-    Төлем жасалғанын дәлелдейтін цифрлық чек сервисі.  
+  <img src="logo.png" class="hero-logo" alt="PayFlow logo">
+
+  <h1 data-i18n="heroTitle">PayFlow</h1>
+
+  <p class="hero-text" data-i18n="heroText">
+    Төлем жасалғанын дәлелдейтін цифрлық чек сервисі.<br>
     ID, Hash және QR арқылы қорғалған.
   </p>
-  <a href="#service" class="btn big">Чек жасау</a>
+
+  <a href="#service" class="btn big" data-i18n="heroBtn">Чек жасау</a>
 </section>
 
 <!-- FEATURES -->
 <section class="features">
-  <h2>Неге PayFlow?</h2>
+  <h2 data-i18n="featuresTitle">Неге PayFlow?</h2>
   <ul>
-    <li>✔ Өзгертілмейтін чек</li>
-    <li>✔ Бірегей ID + Hash</li>
-    <li>✔ QR арқылы тексеру</li>
-    <li>✔ Қағаз чек қажет емес</li>
+    <li data-i18n="f1">✔ Өзгертілмейтін чек</li>
+    <li data-i18n="f2">✔ Бірегей ID + Hash</li>
+    <li data-i18n="f3">✔ QR арқылы тексеру</li>
+    <li data-i18n="f4">✔ Қағаз чек қажет емес</li>
   </ul>
 </section>
 
@@ -36,24 +47,32 @@
 <section id="service" class="service">
   <div class="card">
 
-    <h2>Цифрлық чек жасау</h2>
+    <h2 data-i18n="makeTitle">Цифрлық чек жасау</h2>
 
-    <input id="payer" placeholder="Төлеуші">
-    <input id="receiver" placeholder="Алушы">
-    <input id="amount" type="number" placeholder="Сома (₸)">
+    <input id="payer" data-i18n-ph="payer" placeholder="Төлеуші">
+    <input id="receiver" data-i18n-ph="receiver" placeholder="Алушы">
+    <input id="amount" type="number" data-i18n-ph="amount" placeholder="Сома (₸)">
 
-    <button class="btn" onclick="generateCheck()">Чек жасау</button>
-    <button class="btn secondary" onclick="downloadPDF()">PDF жүктеу</button>
+    <button class="btn" onclick="generateCheck()" data-i18n="btnCreate">
+      Чек жасау
+    </button>
 
+    <button class="btn secondary" onclick="downloadPDF()" data-i18n="btnPdf">
+      PDF жүктеу
+    </button>
+
+    <!-- CHECK RESULT (HIDDEN INITIALLY) -->
     <div id="checkBox" class="check hidden">
-      <p><b>Төлеуші:</b> <span id="outPayer"></span></p>
-      <p><b>Алушы:</b> <span id="outReceiver"></span></p>
-      <p><b>Сома:</b> <span id="outAmount"></span> ₸</p>
-      <p><b>Чек ID:</b> <span id="checkId"></span></p>
+      <p><b data-i18n="payer">Төлеуші:</b> <span id="outPayer"></span></p>
+      <p><b data-i18n="receiver">Алушы:</b> <span id="outReceiver"></span></p>
+      <p><b data-i18n="amount">Сома:</b> <span id="outAmount"></span> ₸</p>
+      <p><b>Check ID:</b> <span id="checkId"></span></p>
       <p><b>Hash:</b> <span id="hash"></span></p>
 
-      <p class="success">✅ Төлем расталды</p>
-      <p class="secure">Бұл чек PayFlow жүйесінде тіркелген және өзгертілмейді</p>
+      <p class="success" data-i18n="status">✅ Төлем расталды</p>
+      <p class="secure" data-i18n="secure">
+        Бұл чек PayFlow жүйесінде тіркелген және өзгертілмейді
+      </p>
 
       <div id="qr"></div>
     </div>
@@ -63,17 +82,24 @@
 
 <!-- VERIFY -->
 <section class="verify">
-  <h2>Чекті тексеру</h2>
-  <input id="vid" placeholder="Чек ID">
-  <input id="vhash" placeholder="Hash">
-  <button class="btn" onclick="verifyCheck()">Тексеру</button>
+  <h2 data-i18n="verifyTitle">Чекті тексеру</h2>
+
+  <input id="vid" data-i18n-ph="vid" placeholder="Чек ID">
+  <input id="vhash" data-i18n-ph="vhash" placeholder="Hash">
+
+  <button class="btn" onclick="verifyCheck()" data-i18n="btnVerify">
+    Тексеру
+  </button>
+
   <div id="verifyResult"></div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 PayFlow — Авторлық жоба</p>
-  <p class="demo">Бұл сайт — демонстрациялық прототип. Нақты төлем қабылдамайды.</p>
+  <p data-i18n="footerAuthor">© 2026 PayFlow — Авторлық жоба</p>
+  <p class="demo" data-i18n="footerDemo">
+    Бұл сайт — демонстрациялық прототип. Нақты төлем қабылдамайды.
+  </p>
 </footer>
 
 <script src="script.js"></script>
