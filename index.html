@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>PayFlow MVP</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
@@ -11,53 +11,43 @@
   <!-- STYLE -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- jsPDF -->
+  <!-- jsPDF (PDF үшін) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- QR CODE (PDF-ке QR салу үшін) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
 
-  <div class="container">
-    <div class="card">
+<div class="container">
+  <div class="card">
 
-      <!-- LOGO -->
-      <img src="logo.png" class="main-logo">
+    <img src="logo.png" class="main-logo">
 
-      <h2>PayFlow MVP</h2>
-      <p class="subtitle">Цифрлық чек генерациялау жүйесі</p>
+    <h2>PayFlow MVP</h2>
+    <p>Цифрлық чек генерациясы</p>
 
-      <!-- BUYER -->
-      <input id="name" type="text" placeholder="Сатып алушының аты">
+    <input id="name" type="text" placeholder="Сатып алушының аты">
+    <input id="phone" type="text" placeholder="Телефон нөмірі" inputmode="numeric">
+    <input id="product" type="text" placeholder="Тауар / қызмет">
+    <input id="amount" type="text" placeholder="Сома (₸)" inputmode="numeric">
 
-      <!-- PHONE (ONLY NUMBER) -->
-      <input id="phone" type="text" placeholder="Телефон нөмірі" inputmode="numeric">
+    <select id="payment" onchange="updateLogo()">
+      <option value="">Төлем түрін таңда</option>
+      <option value="Kaspi">Kaspi</option>
+      <option value="Freedom">Freedom</option>
+      <option value="Qiwi">Qiwi</option>
+      <option value="Halyk">Halyk</option>
+    </select>
 
-      <!-- PRODUCT -->
-      <input id="product" type="text" placeholder="Қызмет / тауар атауы">
+    <img id="paymentLogo" class="pay-logo" style="display:none">
 
-      <!-- AMOUNT (ONLY NUMBER) -->
-      <input id="amount" type="text" placeholder="Сома (₸)" inputmode="numeric">
+    <button onclick="generateCheck()">🧾 Чек жасау</button>
+    <button class="pdf-btn" onclick="downloadPDF()">📄 PDF жүктеу</button>
 
-      <!-- PAYMENT -->
-      <select id="payment" onchange="updateLogo()">
-        <option value="">Төлем түрін таңда</option>
-        <option value="Kaspi">Kaspi</option>
-        <option value="Freedom">Freedom</option>
-        <option value="Qiwi">Qiwi</option>
-        <option value="Halyk">Halyk</option>
-      </select>
-
-      <!-- PAYMENT LOGO -->
-      <img id="paymentLogo" class="pay-logo" style="display:none;">
-
-      <!-- BUTTON -->
-      <button onclick="generateCheck()">Чек жасау</button>
-
-      <!-- PDF BUTTON -->
-      <button class="pdf-btn" onclick="downloadPDF()">📄 PDF жүктеу</button>
-
-    </div>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
