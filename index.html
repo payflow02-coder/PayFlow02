@@ -5,16 +5,12 @@
   <title>PayFlow MVP</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
-
-  <!-- STYLE -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- jsPDF (PDF үшін) -->
+  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-  <!-- QR CODE (PDF-ке QR салу үшін) -->
+  <!-- QR -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
@@ -24,13 +20,16 @@
 
     <img src="logo.png" class="main-logo">
 
-    <h2>PayFlow MVP</h2>
-    <p>Цифрлық чек генерациясы</p>
-<input id="seller" type="text" placeholder="Сатушының аты / ИП">
-    <input id="name" type="text" placeholder="Сатып алушының аты">
-    <input id="phone" type="text" placeholder="Телефон нөмірі" inputmode="numeric">
-    <input id="product" type="text" placeholder="Тауар / қызмет">
-    <input id="amount" type="text" placeholder="Сома (₸)" inputmode="numeric">
+    <h2>PayFlow</h2>
+    <p>Цифрлық чек (Demo)</p>
+
+    <input id="seller" placeholder="Сатушының аты / ИП">
+    <input id="iin" placeholder="ИИН / БИН" inputmode="numeric">
+
+    <input id="name" placeholder="Сатып алушының аты">
+    <input id="phone" placeholder="Телефон нөмірі" inputmode="numeric">
+    <input id="product" placeholder="Тауар / қызмет">
+    <input id="amount" placeholder="Сома (₸)" inputmode="numeric">
 
     <select id="payment" onchange="updateLogo()">
       <option value="">Төлем түрін таңда</option>
