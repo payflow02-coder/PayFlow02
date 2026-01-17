@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-<meta charset="UTF-8">
-<title>PayFlow | Чекті тексеру</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body{
-  font-family: Arial, sans-serif;
-  background:#f3f4f6;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-}
-.box{
-  background:#fff;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 10px 25px rgba(0,0,0,.2);
-  text-align:center;
-  max-width:350px;
-}
-h1{color:#2563eb}
-</style>
+  <meta charset="UTF-8">
+  <title>PayFlow Check Verify</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<div class="box">
-  <h1>PayFlow</h1>
-  <p>Бұл чек демонстрациялық жоба арқылы жасалған.</p>
-  <p><strong>Нақты төлем жүйесі емес.</strong></p>
-</div>
+
+  <div class="container">
+    <div class="card">
+      <h2>PayFlow Check Verify</h2>
+      <p>Чек тексеру (демо)</p>
+
+      <input id="checkIdInput" placeholder="Check ID енгіз">
+      <button onclick="verifyCheck()">Тексеру</button>
+
+      <p id="result"></p>
+    </div>
+  </div>
+
+  <script>
+    function verifyCheck() {
+      const id = document.getElementById("checkIdInput").value;
+      const result = document.getElementById("result");
+
+      if (!id) {
+        result.innerText = "❌ Check ID енгізілмеді";
+        result.style.color = "red";
+        return;
+      }
+
+      result.innerText = "✅ Чек табылды (Demo Check)";
+      result.style.color = "green";
+    }
+  </script>
+
 </body>
 </html>
