@@ -6,7 +6,9 @@
   font-family: Arial, sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -23,7 +25,7 @@ section {
    HERO
 =============================== */
 .hero {
-  background: linear-gradient(135deg,#2563eb,#3b82f6);
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
   color: white;
 }
 
@@ -49,7 +51,9 @@ section {
   text-decoration: none;
 }
 
-.big { font-size: 18px; }
+.big {
+  font-size: 18px;
+}
 
 .secondary {
   background: #e5e7eb;
@@ -81,16 +85,24 @@ section {
   margin: auto;
   padding: 25px;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.1);
-  animation: pop .4s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: pop 0.4s ease;
 }
 
 @keyframes pop {
-  from { transform: scale(.95); opacity: 0 }
-  to { transform: scale(1); opacity: 1 }
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   width: 100%;
   padding: 12px;
   margin-bottom: 12px;
@@ -101,15 +113,23 @@ input, textarea, select {
 .check {
   margin-top: 20px;
   text-align: left;
-  animation: slide .4s ease;
+  animation: slide 0.4s ease;
 }
 
 @keyframes slide {
-  from { transform: translateY(20px); opacity: 0 }
-  to { transform: translateY(0); opacity: 1 }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.hidden { display: none; }
+.hidden {
+  display: none;
+}
 
 .success {
   background: #dcfce7;
@@ -152,14 +172,17 @@ footer {
    MOBILE
 =============================== */
 @media (max-width: 600px) {
-  .btn { width: 100%; }
+  .btn {
+    width: 100%;
+  }
+
   .big {
     position: fixed;
     bottom: 15px;
     left: 15px;
     right: 15px;
     z-index: 10;
-    box-shadow: 0 10px 20px rgba(0,0,0,.2);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
   }
 }
 
@@ -167,10 +190,26 @@ footer {
    DARK MODE
 =============================== */
 @media (prefers-color-scheme: dark) {
-  body { background: #0f172a; color: #e5e7eb; }
-  .card { background: #020617; }
-  input, textarea, select { background: #020617; color: white; border-color: #334155; }
-  footer { background: black; }
+  body {
+    background: #0f172a;
+    color: #e5e7eb;
+  }
+
+  .card {
+    background: #020617;
+  }
+
+  input,
+  textarea,
+  select {
+    background: #020617;
+    color: white;
+    border-color: #334155;
+  }
+
+  footer {
+    background: black;
+  }
 }
 
 /* ===============================
@@ -191,7 +230,6 @@ footer {
   border-radius: 6px;
   border: none;
   cursor: pointer;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
   color: #111;
 }
-<link rel="stylesheet" href="style.css">
