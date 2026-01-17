@@ -7,13 +7,13 @@
 **PayFlow** — сатып алушы құқығын қорғайтын және цифрлық чек генерациялайтын демонстрациялық веб-сайт.
 
 ### Мүмкіндіктері
-- ✅ Чек жасау
-- ✅ Аты, телефон нөмірі, сома, тауар енгізу
-- ✅ Төлем қосымшасын таңдау (Freedom, Kaspi, Qiwi, Халық банк) **логотипімен**
-- ✅ PDF чек (демо, жүктеу мүмкіндігі)
-- ✅ QR-код генерациясы
-- ✅ Чат өрісі (ескертпе / ИПС орнына)
-- ✅ PDF-ті жіберуге дайын формат
+- ✅ Чек жасау  
+- ✅ Аты, телефон нөмірі, сома, тауар енгізу  
+- ✅ Төлем қосымшасын таңдау (Freedom, Kaspi, Qiwi, Халық банк) **логотипімен**  
+- ✅ PDF чек (демо, жүктеу мүмкіндігі)  
+- ✅ QR-код генерациясы  
+- ✅ Чат өрісі (ескертпе / ИПС орнына)  
+- ✅ PDF-ті жіберуге дайын формат  
 
 ⚠️ Бұл жоба тек **демонстрациялық мақсатта** жасалған.  
 Нақты төлем жүйесі емес.
@@ -27,13 +27,13 @@
 **PayFlow** — демонстрационный веб-сайт для генерации цифровых чеков и защиты прав покупателей.
 
 ### Возможности
-- ✅ Создание чека
-- ✅ Ввод имени, телефона, суммы, товара
-- ✅ Выбор платежного приложения (Freedom, Kaspi, Qiwi, Halyk) **с логотипом**
-- ✅ PDF чек (демо, доступно для скачивания)
-- ✅ Генерация QR-кода
-- ✅ Поле чат (вместо заметки / ИПС)
-- ✅ PDF готов к отправке
+- ✅ Создание чека  
+- ✅ Ввод имени, телефона, суммы, товара  
+- ✅ Выбор платежного приложения (Freedom, Kaspi, Qiwi, Halyk) **с логотипом**  
+- ✅ PDF чек (демо, доступно для скачивания)  
+- ✅ Генерация QR-кода  
+- ✅ Поле чат (вместо заметки / ИПС)  
+- ✅ PDF готов к отправке  
 
 ⚠️ Проект является **демонстрационным**.  
 Не является реальной платежной системой.
@@ -47,13 +47,13 @@
 **PayFlow** is a demo web application for generating digital receipts and protecting buyer rights.
 
 ### Features
-- ✅ Receipt generation
-- ✅ Input name, phone, amount, item
-- ✅ Payment app selection (Freedom, Kaspi, Qiwi, Halyk) **with logo**
-- ✅ PDF receipt (demo, downloadable)
-- ✅ QR code generation
-- ✅ Chat field (instead of note / IPS)
-- ✅ PDF ready for sending
+- ✅ Receipt generation  
+- ✅ Input name, phone, amount, item  
+- ✅ Payment app selection (Freedom, Kaspi, Qiwi, Halyk) **with logo**  
+- ✅ PDF receipt (demo, downloadable)  
+- ✅ QR code generation  
+- ✅ Chat field (instead of note / IPS)  
+- ✅ PDF ready for sending  
 
 ⚠️ This project is for **demonstration purposes only**.  
 It is not a real payment system.
