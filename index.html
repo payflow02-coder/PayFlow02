@@ -15,48 +15,59 @@
 </head>
 <body>
 
-  <div class="container">
-    <div class="card">
+<div class="container">
+  <div class="card">
 
-      <!-- LOGO -->
-      <img src="logo.png" alt="PayFlow" class="main-logo" />
+    <img src="logo.png" class="main-logo" alt="PayFlow" />
 
-      <h2>PayFlow MVP</h2>
-      <p>Цифрлық чек генерациялау жүйесі</p>
+    <h2>PayFlow MVP</h2>
+    <p>Цифрлық чек генерациялау жүйесі</p>
 
-      <input id="name" type="text" placeholder="Сатып алушының аты" />
+    <!-- САТУШЫ -->
+    <input id="seller" type="text" placeholder="Сатушының аты" />
 
-      <input id="phone"
-             type="text"
-             placeholder="Телефон нөмірі"
-             inputmode="numeric"
-             maxlength="11"
-             oninput="onlyNumbers(this)" />
+    <!-- САТЫП АЛУШЫ -->
+    <input id="buyer" type="text" placeholder="Сатып алушының аты" />
 
-      <input id="item" type="text" placeholder="Қызмет / тауар атауы" />
+    <!-- ТЕЛЕФОН -->
+    <input id="phone"
+           type="tel"
+           placeholder="Телефон нөмірі"
+           inputmode="numeric"
+           pattern="[0-9]*"
+           maxlength="11"
+           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+           oninput="onlyNumbers(this)" />
 
-      <input id="amount"
-             type="text"
-             placeholder="Сома (₸)"
-             oninput="onlyNumbers(this)" />
+    <!-- ТАУАР -->
+    <input id="item" type="text" placeholder="Қызмет / тауар атауы" />
 
-      <select id="payment" onchange="updateLogo()">
-        <option value="">Төлем түрін таңдаңыз</option>
-        <option value="Kaspi">Kaspi</option>
-        <option value="Freedom">Freedom</option>
-        <option value="Qiwi">Qiwi</option>
-        <option value="Halyk">Halyk</option>
-      </select>
+    <!-- СОМА -->
+    <input id="amount"
+           type="text"
+           placeholder="Сома (₸)"
+           inputmode="numeric"
+           pattern="[0-9]*"
+           oninput="onlyNumbers(this)" />
 
-      <img id="payLogo" class="pay-logo" style="display:none" />
+    <!-- ТӨЛЕМ -->
+    <select id="payment" onchange="updateLogo()">
+      <option value="">Төлем түрін таңдаңыз</option>
+      <option value="Kaspi">Kaspi</option>
+      <option value="Freedom">Freedom</option>
+      <option value="Qiwi">Qiwi</option>
+      <option value="Halyk">Halyk</option>
+    </select>
 
-      <button onclick="generate()">Чек жасау</button>
+    <img id="payLogo" class="pay-logo" style="display:none" />
 
-      <div id="qrcode"></div>
+    <button onclick="generate()">Чек жасау</button>
 
-    </div>
+    <div id="qrcode"></div>
+
   </div>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
