@@ -1,52 +1,127 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8">
-  <title>PayFlow — Цифрлық чек</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>PayFlow MVP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
 
-  <!-- СЫРТҚЫ CSS -->
-  <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(180deg,#2563eb,#1e40af);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:20px
+}
+.app{
+  background:#fff;
+  width:100%;
+  max-width:380px;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 15px 30px rgba(0,0,0,.3)
+}
+header{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-bottom:20px
+}
+header img{width:42px;height:42px}
+h1{margin:0;font-size:20px;color:#1e3a8a}
+p{font-size:13px;color:#475569}
+input,select,button{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:10px;
+  border:1px solid #c7d2fe;
+  font-size:14px
+}
+button{
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  font-weight:bold;
+  cursor:pointer
+}
+button:hover{background:#1d4ed8}
+.pay-logo{text-align:center;margin:10px 0}
+.pay-logo img{width:90px;display:none}
+#qrcode{display:flex;justify-content:center;margin-top:15px}
+</style>
 </head>
+
 <body>
+<div class="app">
 
-  <div class="card">
-    <h1>📱 PayFlow MVP</h1>
-    <p>Сатып алушы құқығын қорғайтын цифрлық чек жүйесі</p>
-
-    <!-- Міндетті өрістер -->
-    <input type="text" id="name" placeholder="Сатып алушының аты">
-    <input type="text" id="phone" placeholder="Телефон нөмірі">
-    <input type="text" id="item" placeholder="Қызмет / тауар атауы">
-    <input type="text" id="amount" placeholder="Сома (₸)">
-
-    <!-- Төлем қосымшасы -->
-    <select id="payment">
-      <option value="">Төлем қосымшасын таңда</option>
-      <option value="Freedom">Freedom</option>
-      <option value="Kaspi">Kaspi</option>
-      <option value="Qiwi">Qiwi</option>
-      <option value="Halyk">Халық банк</option>
-    </select>
-
-    <!-- ЛОГО -->
-    <img id="paymentLogo" class="logo" src="logo.png" alt="Logo">
-
-    <!-- Чат -->
-    <textarea id="chat" placeholder="Чат жазуы (қолмен жазуға болады)"></textarea>
-
-    <button id="createBtn">Чек жасау</button>
-
-    <!-- QR -->
-    <div class="qr-preview">
-      <img id="qrImage" alt="">
-    </div>
+<header>
+  <img src="logo.png">
+  <div>
+    <h1>PayFlow MVP</h1>
+    <p>Цифрлық чек генерациялау жүйесі</p>
   </div>
+</header>
 
-  <!-- QR LIB -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<input id="name" placeholder="Сатып алушының аты">
+<input id="phone" type="tel" placeholder="Телефон нөмірі" inputmode="numeric" pattern="[0-9]+">
+<input id="item" placeholder="Қызмет / тауар атауы">
+<input id="amount" type="number" placeholder="Сома (₸)" min="1">
 
-  <!-- СЫРТҚЫ JS -->
-  <script src="script.js"></script>
+<select id="payment" onchange="showLogo()">
+  <option value="">Төлем қосымшасын таңдаңыз</option>
+  <option value="Kaspi">Kaspi</option>
+  <option value="Freedom">Freedom</option>
+  <option value="Qiwi">Qiwi</option>
+  <option value="Halyk">Halyk</option>
+</select>
+
+<div class="pay-logo">
+  <img id="Kaspi" src="kaspi.png">
+  <img id="Freedom" src="freedom.png">
+  <img id="Qiwi" src="qiwi.png">
+  <img id="Halyk" src="halyk.png">
+</div>
+
+<button onclick="generate()">Чек жасау</button>
+<div id="qrcode"></div>
+
+</div>
+
+<script>
+function showLogo(){
+  document.querySelectorAll('.pay-logo img').forEach(i=>i.style.display='none');
+  const v=document.getElementById('payment').value;
+  if(v) document.getElementById(v).style.display='block';
+}
+
+function generate(){
+  const n=name.value,p=phone.value,i=item.value,a=amount.value,py=payment.value;
+  if(!n||!p||!i||!a||!py){alert("Барлық өрісті толтыр!");return;}
+
+  qrcode.innerHTML="";
+  new QRCode(qrcode,{
+    text:`PayFlow чек | ${n} | ${a}₸ | ${py}`,
+    width:128,height:128
+  });
+
+  const {jsPDF}=window.jspdf;
+  const pdf=new jsPDF();
+  pdf.text("PayFlow Demo Check",20,20);
+  pdf.text(`Аты: ${n}`,20,40);
+  pdf.text(`Телефон: ${p}`,20,50);
+  pdf.text(`Тауар: ${i}`,20,60);
+  pdf.text(`Сома: ${a} ₸`,20,70);
+  pdf.text(`Төлем: ${py}`,20,80);
+  pdf.save("payflow-check.pdf");
+}
+</script>
+
 </body>
 </html>
