@@ -76,11 +76,11 @@ window.downloadPDF = function () {
     alert("Алдымен дұрыс чек жасаңыз");
     return;
   }
-  window.print();
+  window.print(); // демо ретінде print функциясын қолданамыз
 };
 
 // ===============================
-// LANGUAGE SWITCH (FINAL FIX)
+// LANGUAGE SWITCH
 // ===============================
 const translations = {
   kk: {
