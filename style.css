@@ -1,103 +1,37 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(180deg, #2563eb, #1e40af);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+body{
+  margin:0;
+  font-family:Arial;
+  background:#2563eb;
 }
-
-.app {
-  background: #fff;
-  width: 100%;
-  max-width: 380px;
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+.top{
+  background:#1e40af;
+  color:#fff;
+  padding:15px;
+  display:flex;
+  align-items:center;
 }
-
-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+.main-logo{width:40px;margin-right:10px}
+.card{
+  background:#fff;
+  max-width:420px;
+  margin:30px auto;
+  padding:20px;
+  border-radius:14px;
 }
-
-header img {
-  width: 42px;
-  height: 42px;
+input,select,button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
 }
-
-h1 {
-  margin: 0;
-  font-size: 20px;
-  color: #1e3a8a;
+button{
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
 }
-
-p {
-  font-size: 13px;
-  color: #475569;
-}
-
-input, select, button {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  border: 1px solid #c7d2fe;
-  font-size: 14px;
-}
-
-button {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #1d4ed8;
-}
-
-.pay-logo {
-  text-align: center;
-  margin: 10px 0;
-}
-
-.pay-logo img {
-  width: 90px;
-  display: none;
-}
-
-#qrcode {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-}
-/* ===== RECEIPT (ЧЕК) ===== */
-
-.receipt {
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 12px;
-  background: #eff6ff;
-  text-align: left;
-  border: 1px solid #2563eb;
-}
-
-.receipt h3 {
-  margin-top: 0;
-  color: #1e40af;
-}
-
-.receipt p {
-  margin: 6px 0;
-  font-size: 14px;
-}
-
-.receipt-logo {
-  width: 80px;
-  margin-bottom: 10px;
+.pay-logo{
+  display:none;
+  width:120px;
+  margin:10px auto;
 }
