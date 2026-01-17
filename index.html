@@ -8,32 +8,31 @@
 
   <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 </head>
+
 <body>
 
+<h2 style="text-align:center;">PayFlow</h2>
+
 <div class="card">
-  <h2>PayFlow</h2>
 
   <input id="seller" placeholder="Сатушы аты">
 
   <input id="iin" placeholder="Сатушы ИИН / БИН"
-         inputmode="numeric"
          maxlength="12"
          oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
   <input id="buyer" placeholder="Сатып алушы аты">
 
-  <input id="phone" placeholder="Сатып алушы телефон нөмірі"
-         inputmode="numeric"
+  <input id="phone" placeholder="Сатып алушы телефон"
          oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
   <input id="product" placeholder="Тауар / қызмет атауы">
 
   <input id="amount" placeholder="Сома (₸)"
-         inputmode="numeric"
          oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
+  <!-- ТӨЛЕМ -->
   <select id="payment" onchange="updateLogo()">
     <option value="">Төлем түрін таңдаңыз</option>
     <option value="Kaspi">Kaspi</option>
@@ -42,15 +41,23 @@
     <option value="Halyk">Halyk</option>
   </select>
 
-  <!-- ЛОГО -->
+  <!-- ЛОГО (ЭКРАНДА КӨРІНЕДІ) -->
   <img id="paymentLogo"
-       src=""
-       alt="Payment logo"
-       style="display:none; width:120px; margin:10px auto;">
+       style="display:none;width:120px;margin:10px auto;">
 
-  <!-- БӨЛЕК БАТЫРМАЛАР -->
   <button onclick="generateCheck()">Чек жасау</button>
   <button onclick="generatePDF()">PDF жүктеу</button>
+
+</div>
+
+<!-- ЧЕК ЭКРАНДА -->
+<div id="check"
+     style="display:none;
+            width:260px;
+            margin:20px auto;
+            padding:10px;
+            border:1px dashed #000;
+            font-family:Courier New;">
 </div>
 
 <script src="script.js"></script>
