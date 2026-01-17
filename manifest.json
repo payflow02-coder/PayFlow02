@@ -1,27 +1,32 @@
 {
   "name": "PayFlow",
   "short_name": "PayFlow",
-  "description": "Сатып алушы құқығын қорғайтын цифрлық чек генерациялайтын демонстрациялық веб-қосымша",
+  "description": "Сатып алушы құқығын қорғауға арналған цифрлық чек генерациялайтын демонстрациялық веб-қосымша",
 
-  "start_url": "./index.html",
-  "scope": "./",
+  "id": "/PayFlow02/",
+  "start_url": "/PayFlow02/index.html",
+  "scope": "/PayFlow02/",
 
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
 
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
 
+  "lang": "kk",
+
   "icons": [
     {
-      "src": "logo.png",
+      "src": "logo-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "logo.png",
+      "src": "logo-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
