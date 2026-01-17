@@ -1,235 +1,78 @@
-/* ===============================
-   GLOBAL
-=============================== */
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
-  background: #f3f4f6;
-  color: #111;
-}
-
-section {
-  padding: 50px 20px;
-  text-align: center;
-}
-
-/* ===============================
-   HERO
-=============================== */
-.hero {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
-  color: white;
-}
-
-.hero-logo {
-  width: 70px;
-}
-
-.hero-text {
-  max-width: 500px;
-  margin: 15px auto;
-}
-
-/* ===============================
-   BUTTONS
-=============================== */
-.btn {
-  padding: 14px 24px;
-  background: #2563eb;
-  color: white;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.big {
-  font-size: 18px;
-}
-
-.secondary {
-  background: #e5e7eb;
-  color: #111;
-  margin-top: 10px;
-}
-
-/* ===============================
-   FEATURES
-=============================== */
-.features ul {
-  list-style: none;
-  padding: 0;
-  max-width: 400px;
-  margin: auto;
-  text-align: left;
-}
-
-.features li {
-  margin-bottom: 8px;
-}
-
-/* ===============================
-   CARD
-=============================== */
-.card {
-  background: white;
-  max-width: 360px;
-  margin: auto;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  animation: pop 0.4s ease;
-}
-
-@keyframes pop {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-input,
-textarea,
-select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-}
-
-.check {
-  margin-top: 20px;
-  text-align: left;
-  animation: slide 0.4s ease;
-}
-
-@keyframes slide {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.hidden {
-  display: none;
-}
-
-.success {
-  background: #dcfce7;
-  padding: 8px;
-  border-radius: 8px;
-  text-align: center;
-  margin-top: 10px;
-  color: #166534;
-}
-
-.secure {
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 6px;
-}
-
-/* ===============================
-   VERIFY
-=============================== */
-.verify input {
-  max-width: 260px;
-  margin: 5px;
-}
-
-/* ===============================
-   FOOTER
-=============================== */
-footer {
-  background: #111;
-  color: #aaa;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg, #2563eb, #1e40af);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
   padding: 20px;
 }
 
-.demo {
-  font-size: 11px;
-  color: #777;
+.app {
+  background: #fff;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
 }
 
-/* ===============================
-   MOBILE
-=============================== */
-@media (max-width: 600px) {
-  .btn {
-    width: 100%;
-  }
-
-  .big {
-    position: fixed;
-    bottom: 15px;
-    left: 15px;
-    right: 15px;
-    z-index: 10;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  }
-}
-
-/* ===============================
-   DARK MODE
-=============================== */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #0f172a;
-    color: #e5e7eb;
-  }
-
-  .card {
-    background: #020617;
-  }
-
-  input,
-  textarea,
-  select {
-    background: #020617;
-    color: white;
-    border-color: #334155;
-  }
-
-  footer {
-    background: black;
-  }
-}
-
-/* ===============================
-   LANGUAGE SWITCH
-=============================== */
-.lang-switch {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  z-index: 9999;
+header {
   display: flex;
-  gap: 6px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.lang-switch button {
-  padding: 6px 10px;
-  font-size: 12px;
-  border-radius: 6px;
+header img {
+  width: 42px;
+  height: 42px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 20px;
+  color: #1e3a8a;
+}
+
+p {
+  font-size: 13px;
+  color: #475569;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #c7d2fe;
+  font-size: 14px;
+}
+
+button {
+  background: #2563eb;
+  color: #fff;
   border: none;
+  font-weight: bold;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.9);
-  color: #111;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.pay-logo {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.pay-logo img {
+  width: 90px;
+  display: none;
+}
+
+#qrcode {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
 }
