@@ -4,6 +4,58 @@
   <meta charset="UTF-8">
   <title>PayFlow — Цифрлық чек</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- СЫРТҚЫ CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="card">
+    <h1>📱 PayFlow MVP</h1>
+    <p>Сатып алушы құқығын қорғайтын цифрлық чек жүйесі</p>
+
+    <!-- Міндетті өрістер -->
+    <input type="text" id="name" placeholder="Сатып алушының аты">
+    <input type="text" id="phone" placeholder="Телефон нөмірі">
+    <input type="text" id="item" placeholder="Қызмет / тауар атауы">
+    <input type="text" id="amount" placeholder="Сома (₸)">
+
+    <!-- Төлем қосымшасы -->
+    <select id="payment">
+      <option value="">Төлем қосымшасын таңда</option>
+      <option value="Freedom">Freedom</option>
+      <option value="Kaspi">Kaspi</option>
+      <option value="Qiwi">Qiwi</option>
+      <option value="Halyk">Халық банк</option>
+    </select>
+
+    <!-- ЛОГО -->
+    <img id="paymentLogo" class="logo" src="logo.png" alt="Logo">
+
+    <!-- Чат -->
+    <textarea id="chat" placeholder="Чат жазуы (қолмен жазуға болады)"></textarea>
+
+    <button id="createBtn">Чек жасау</button>
+
+    <!-- QR -->
+    <div class="qr-preview">
+      <img id="qrImage" alt="">
+    </div>
+  </div>
+
+  <!-- QR LIB -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+  <!-- СЫРТҚЫ JS -->
+  <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <title>PayFlow — Цифрлық чек</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { 
       font-family: Arial; 
