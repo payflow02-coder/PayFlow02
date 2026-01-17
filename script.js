@@ -5,20 +5,26 @@
   });
 });
 
-// 💳 логотип
+// 💳 ЛОГОТИП ДҰРЫС ШЫҒУЫ ҮШІН (FIX)
 function updateLogo(){
-  const map={
-    Kaspi:"logo/kaspi.png",
-    Freedom:"logo/freedom.png",
-    Qiwi:"logo/qiwi.png",
-    Halyk:"logo/halyk.png"
+  const select = document.getElementById("payment");
+  const img = document.getElementById("paymentLogo");
+
+  const map = {
+    Kaspi: "logo/kaspi.png",
+    Freedom: "logo/freedom.png",
+    Qiwi: "logo/qiwi.png",
+    Halyk: "logo/halyk.png"
   };
-  const img=document.getElementById("paymentLogo");
-  const p=payment.value;
-  if(map[p]){
-    img.src=map[p];
-    img.style.display="block";
-  } else img.style.display="none";
+
+  const value = select.value;
+
+  if(map[value]){
+    img.src = map[value];
+    img.style.display = "block";
+  } else {
+    img.style.display = "none";
+  }
 }
 
 // ₸ формат
@@ -26,46 +32,53 @@ function formatKZT(v){
   return v.replace(/\B(?=(\d{3})+(?!\d))/g," ")+" ₸";
 }
 
-// 🧾 PDF
+// 🧾 ЧЕК = PDF (БҰЛ ДҰРЫС, АЖЫРАТУ КЕРЕК ЕМЕС)
 function generatePDF(){
+
   const data={
-    seller:seller.value,
-    iin:iin.value,
-    buyer:buyer.value,
-    phone:phone.value,
-    item:item.value,
-    amount:amount.value,
-    payment:payment.value
+    seller:document.getElementById("seller").value,
+    iin:document.getElementById("iin").value,
+    buyer:document.getElementById("buyer").value,
+    phone:document.getElementById("phone").value,
+    item:document.getElementById("item").value,
+    amount:document.getElementById("amount").value,
+    payment:document.getElementById("payment").value
   };
 
   for(let k in data){
-    if(!data[k]){ alert("Барлық жолды толтыр"); return; }
+    if(!data[k]){
+      alert("Барлық жолды толтыр");
+      return;
+    }
   }
 
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({unit:"mm",format:[80,220]});
-  let y=10;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:"mm", format:[80,220] });
+  let y = 10;
 
   doc.setFont("courier","bold");
   doc.setFontSize(14);
   doc.text("PAYFLOW",40,y,{align:"center"});
   y+=6;
 
-  doc.setFontSize(9);
   doc.setFont("courier","normal");
+  doc.setFontSize(9);
   doc.text("DIGITAL PAYMENT RECEIPT",40,y,{align:"center"});
   y+=6;
 
   doc.line(5,y,75,y); y+=6;
 
-  const logos={
+  const logos = {
     Kaspi:"logo/kaspi.png",
     Freedom:"logo/freedom.png",
     Qiwi:"logo/qiwi.png",
     Halyk:"logo/halyk.png"
   };
-  doc.addImage(logos[data.payment],"PNG",25,y,30,12);
-  y+=16;
+
+  if(logos[data.payment]){
+    doc.addImage(logos[data.payment],"PNG",25,y,30,12);
+    y+=16;
+  }
 
   const row=(l,v)=>{
     doc.text(l,5,y);
@@ -98,8 +111,9 @@ function generatePDF(){
 
   const qrDiv=document.createElement("div");
   new QRCode(qrDiv,{
-    text:location.origin+location.pathname.replace("index.html","verify.html"),
-    width:100,height:100
+    text: location.origin + location.pathname.replace("index.html","verify.html"),
+    width:100,
+    height:100
   });
 
   setTimeout(()=>{
@@ -111,6 +125,7 @@ function generatePDF(){
     doc.text("Scan to verify receipt",40,y,{align:"center"});
     y+=4;
     doc.text("Demo only. Not a real payment.",40,y,{align:"center"});
+
     doc.save("PayFlow_Check.pdf");
   },300);
 }
