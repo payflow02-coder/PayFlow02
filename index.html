@@ -3,62 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>PayFlow</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 
   <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- QR -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
-
 <body>
 
-<h2 style="text-align:center;">PayFlow</h2>
+<h1 class="title">PayFlow</h1>
 
 <div class="card">
-
   <input id="seller" placeholder="Сатушы аты">
-
-  <input id="iin" placeholder="Сатушы ИИН / БИН"
-         maxlength="12"
+  <input id="iin" placeholder="Сатушы ИИН / БИН" maxlength="12"
          oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
   <input id="buyer" placeholder="Сатып алушы аты">
-
   <input id="phone" placeholder="Сатып алушы телефон"
          oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
   <input id="product" placeholder="Тауар / қызмет атауы">
-
   <input id="amount" placeholder="Сома (₸)"
          oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
-  <!-- ТӨЛЕМ -->
   <select id="payment" onchange="updateLogo()">
     <option value="">Төлем түрін таңдаңыз</option>
-    <option value="Kaspi">Kaspi</option>
-    <option value="Freedom">Freedom</option>
-    <option value="Qiwi">Qiwi</option>
-    <option value="Halyk">Halyk</option>
+    <option value="kaspi">Kaspi</option>
+    <option value="freedom">Freedom</option>
+    <option value="qiwi">Qiwi</option>
+    <option value="halyk">Halyk</option>
   </select>
 
-  <!-- ЛОГО (ЭКРАНДА КӨРІНЕДІ) -->
-  <img id="paymentLogo"
-       style="display:none;width:120px;margin:10px auto;">
+  <!-- LOGO (көк фон ішінде) -->
+  <div id="logoBox" class="logo-box" style="display:none;">
+    <img id="paymentLogo">
+  </div>
 
   <button onclick="generateCheck()">Чек жасау</button>
   <button onclick="generatePDF()">PDF жүктеу</button>
-
 </div>
 
-<!-- ЧЕК ЭКРАНДА -->
-<div id="check"
-     style="display:none;
-            width:260px;
-            margin:20px auto;
-            padding:10px;
-            border:1px dashed #000;
-            font-family:Courier New;">
-</div>
+<!-- ЧЕК -->
+<div id="receipt" style="display:none;"></div>
 
 <script src="script.js"></script>
 </body>
