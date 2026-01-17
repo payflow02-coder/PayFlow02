@@ -1,41 +1,35 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8">
-  <title>Чек тексеру</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- COMMON CSS -->
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>PayFlow | Чекті тексеру</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f3f4f6;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.box{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+  text-align:center;
+  max-width:350px;
+}
+h1{color:#2563eb}
+</style>
 </head>
+
 <body>
-
-  <section class="verify">
-    <div class="card">
-      <h2 data-i18n="verify">Чек тексеру</h2>
-
-      <input
-        type="text"
-        id="vid"
-        placeholder="Check ID"
-        data-i18n-ph="check"
-      >
-
-      <input
-        type="text"
-        id="vhash"
-        placeholder="Hash"
-      >
-
-      <button class="btn" onclick="verifyCheck()">
-        Тексеру
-      </button>
-
-      <p id="verifyResult"></p>
-    </div>
-  </section>
-
-  <!-- COMMON JS -->
-  <script src="script.js"></script>
+<div class="box">
+  <h1>PayFlow</h1>
+  <p>Бұл чек демонстрациялық жоба арқылы жасалған.</p>
+  <p><strong>Нақты төлем жүйесі емес.</strong></p>
+</div>
 </body>
 </html>
