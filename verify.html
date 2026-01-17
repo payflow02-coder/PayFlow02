@@ -1,40 +1,29 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8">
-  <title>PayFlow Check Verify</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>PayFlow Verify</title>
+<style>
+body{
+  font-family:Arial;
+  background:#f1f5f9;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.box{
+  background:#fff;
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
+}
+</style>
 </head>
 <body>
-
-  <div class="container">
-    <div class="card">
-      <h2>PayFlow Check Verify</h2>
-      <p>Чек тексеру (демо)</p>
-
-      <input id="checkIdInput" placeholder="Check ID енгіз">
-      <button onclick="verifyCheck()">Тексеру</button>
-
-      <p id="result"></p>
-    </div>
-  </div>
-
-  <script>
-    function verifyCheck() {
-      const id = document.getElementById("checkIdInput").value;
-      const result = document.getElementById("result");
-
-      if (!id) {
-        result.innerText = "❌ Check ID енгізілмеді";
-        result.style.color = "red";
-        return;
-      }
-
-      result.innerText = "✅ Чек табылды (Demo Check)";
-      result.style.color = "green";
-    }
-  </script>
-
+<div class="box">
+  <h2>✅ Чек расталды</h2>
+  <p>Бұл чек PayFlow демо жүйесінде жасалған.</p>
+</div>
 </body>
 </html>
