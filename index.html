@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8" />
-  <title>PayFlow MVP</title>
+  <meta charset="UTF-8">
+  <title>PayFlow</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#2563eb" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
 
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 
+  <!-- QR -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
@@ -18,16 +20,17 @@
 <div class="container">
   <div class="card">
 
-    <img src="logo.png" class="main-logo" alt="PayFlow" />
+    <!-- LOGO -->
+    <img src="logo.png" class="main-logo" alt="PayFlow">
 
-    <h2>PayFlow MVP</h2>
-    <p>Цифрлық чек генерациялау жүйесі</p>
+    <h2>PayFlow</h2>
+    <p>Цифрлық чек генерациясы</p>
 
     <!-- САТУШЫ -->
-    <input id="seller" type="text" placeholder="Сатушының аты" />
+    <input id="seller" type="text" placeholder="Сатушының аты">
 
     <!-- САТЫП АЛУШЫ -->
-    <input id="buyer" type="text" placeholder="Сатып алушының аты" />
+    <input id="buyer" type="text" placeholder="Сатып алушының аты">
 
     <!-- ТЕЛЕФОН -->
     <input id="phone"
@@ -36,19 +39,17 @@
            inputmode="numeric"
            pattern="[0-9]*"
            maxlength="11"
-           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-           oninput="onlyNumbers(this)" />
+           oninput="onlyNumbers(this)">
 
     <!-- ТАУАР -->
-    <input id="item" type="text" placeholder="Қызмет / тауар атауы" />
+    <input id="item" type="text" placeholder="Тауар / қызмет">
 
     <!-- СОМА -->
     <input id="amount"
            type="text"
            placeholder="Сома (₸)"
            inputmode="numeric"
-           pattern="[0-9]*"
-           oninput="onlyNumbers(this)" />
+           oninput="onlyNumbers(this)">
 
     <!-- ТӨЛЕМ -->
     <select id="payment" onchange="updateLogo()">
@@ -59,25 +60,38 @@
       <option value="Halyk">Halyk</option>
     </select>
 
-    <img id="payLogo" class="pay-logo" style="display:none" />
+    <!-- ТӨЛЕМ ЛОГОСЫ -->
+    <img id="payLogo" class="pay-logo" style="display:none">
 
-    <button onclick="generate()">Чек жасау</button>
+    <!-- ЧЕК -->
+    <button onclick="generate()">🧾 Чек жасау</button>
 
+    <!-- QR -->
     <div id="qrcode"></div>
-<div id="receipt" class="receipt" style="display:none">
-  <h3>🧾 PayFlow Чек</h3>
 
-  <img id="receiptLogo" class="receipt-logo" />
-<button id="pdfBtn" onclick="downloadPDF()" style="margin-top:10px;">
-  📄 PDF-ке жүктеу
-</button>
-  <p><b>Сатушы:</b> <span id="rSeller"></span></p>
-  <p><b>Сатып алушы:</b> <span id="rBuyer"></span></p>
-  <p><b>Телефон:</b> <span id="rPhone"></span></p>
-  <p><b>Тауар:</b> <span id="rItem"></span></p>
-  <p><b>Сома:</b> <span id="rAmount"></span> ₸</p>
-  <p><b>Төлем:</b> <span id="rPayment"></span></p>
-</div>
+    <!-- ЧЕК КӨРІНІСІ -->
+    <div id="receipt" class="receipt" style="display:none">
+
+      <h3>PayFlow чек</h3>
+
+      <img id="receiptLogo" class="receipt-logo">
+
+      <p><b>Сатушы:</b> <span id="rSeller"></span></p>
+      <p><b>Сатып алушы:</b> <span id="rBuyer"></span></p>
+      <p><b>Телефон:</b> <span id="rPhone"></span></p>
+      <p><b>Тауар:</b> <span id="rItem"></span></p>
+      <p><b>Сома:</b> <span id="rAmount"></span> ₸</p>
+      <p><b>Төлем:</b> <span id="rPayment"></span></p>
+
+      <!-- PDF БАТЫРМА (МІНЕ ОСЫ ЖЕР МАҢЫЗДЫ) -->
+      <button id="pdfBtn"
+              onclick="downloadPDF()"
+              style="display:none;margin-top:10px;">
+        📄 PDF-ке жүктеу
+      </button>
+
+    </div>
+
   </div>
 </div>
 
