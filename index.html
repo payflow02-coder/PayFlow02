@@ -3,54 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <title>PayFlow MVP</title>
-
   <link rel="stylesheet" href="style.css">
 
   <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- QRCode -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
-
 <body>
 
-  <div class="container">
-    <h2>PayFlow MVP</h2>
-    <p>Цифрлық чек генерациялау</p>
+<header class="top">
+  <img src="logo/logo.png" class="main-logo">
+  <h1>PayFlow MVP</h1>
+</header>
 
-    <!-- САТУШЫ -->
-    <input id="seller" placeholder="Сатушы аты">
+<div class="card">
+  <input id="seller" placeholder="Сатушы аты">
+  <input id="iin" placeholder="Сатушы ИИН / БИН" maxlength="12">
 
-    <input id="sellerBin" placeholder="Сатушы ИИН / БИН"
-           inputmode="numeric"
-           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+  <input id="buyer" placeholder="Сатып алушы аты">
+  <input id="phone" placeholder="Телефон нөмірі" maxlength="11">
 
-    <!-- САТЫП АЛУШЫ -->
-    <input id="buyer" placeholder="Сатып алушы аты">
+  <input id="item" placeholder="Тауар / қызмет атауы">
+  <input id="amount" placeholder="Сома (₸)">
 
-    <input id="phone" placeholder="Телефон"
-           inputmode="numeric"
-           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+  <select id="payment" onchange="updateLogo()">
+    <option value="">Төлем түрін таңда</option>
+    <option value="Kaspi">Kaspi</option>
+    <option value="Freedom">Freedom</option>
+    <option value="Qiwi">Qiwi</option>
+    <option value="Halyk">Halyk</option>
+  </select>
 
-    <!-- ТАУАР -->
-    <input id="item" placeholder="Тауар">
+  <img id="paymentLogo" class="pay-logo">
 
-    <input id="amount" placeholder="Сома (₸)"
-           inputmode="numeric"
-           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+  <button onclick="generatePDF()">Чек жасау / PDF жүктеу</button>
+</div>
 
-    <!-- ТӨЛЕМ -->
-    <select id="payment" onchange="updateLogo()">
-      <option value="">Төлем түрін таңдаңыз</option>
-      <option value="Kaspi">Kaspi</option>
-      <option value="Freedom">Freedom</option>
-      <option value="Qiwi">Qiwi</option>
-      <option value="Halyk">Halyk</option>
-    </select>
-
-    <img id="paymentLogo" style="display:none">
-
-    <button onclick="generatePDF()">PDF жүктеу</button>
-  </div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
