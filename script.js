@@ -7,10 +7,10 @@ let lastCheck = null;
 // CHECK GENERATION
 // ===============================
 window.generateCheck = function () {
-  const payer = document.getElementById("payer")?.value.trim() || "";
-  const receiver = document.getElementById("receiver")?.value.trim() || "";
-  const amount = document.getElementById("amount")?.value.trim() || "";
-  const item = document.getElementById("item")?.value.trim() || "";
+  const payer = getValue("payer");
+  const receiver = getValue("receiver");
+  const amount = getValue("amount");
+  const item = getValue("item");
 
   if (!payer || !receiver || !amount || Number(amount) <= 0) {
     alert("Барлық міндетті өрістерді толтырыңыз!");
@@ -21,48 +21,61 @@ window.generateCheck = function () {
   const id = "PF-" + Math.floor(100000 + Math.random() * 900000);
   const date = new Date().toLocaleString();
 
-  // Хэш жасау (демо)
+  // DEMO HASH
   const raw = `${payer}|${receiver}|${amount}|${item}|${id}|${date}`;
   const hash = btoa(unescape(encodeURIComponent(raw))).slice(0, 32);
 
-  // HTML-ға шығару
-  document.getElementById("outPayer")?.innerText = payer;
-  document.getElementById("outReceiver")?.innerText = receiver;
-  document.getElementById("outAmount")?.innerText = amount;
-  document.getElementById("outItem")?.innerText = item;
-  document.getElementById("checkId")?.innerText = id;
-  document.getElementById("hash")?.innerText = hash;
+  // OUTPUT
+  setText("outPayer", payer);
+  setText("outReceiver", receiver);
+  setText("outAmount", amount);
+  setText("outItem", item);
+  setText("checkId", id);
+  setText("hash", hash);
 
-  document.getElementById("checkBox")?.classList.remove("hidden");
-
-  // QR-код генерациясы
-  const qrBox = document.getElementById("qr");
-  if (qrBox) {
-    qrBox.innerHTML = "";
-    const img = document.createElement("img");
-    img.src =
-      "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=" +
-      encodeURIComponent(id + "|" + hash);
-    qrBox.appendChild(img);
-  }
+  toggleCheck(true);
+  generateQR(id, hash);
 
   lastCheck = { id, hash };
 };
 
-// Жасырын чек
+// ===============================
+// CHECK UI HELPERS
+// ===============================
 function hideCheck() {
-  document.getElementById("checkBox")?.classList.add("hidden");
+  toggleCheck(false);
+  clearQR();
+  lastCheck = null;
+}
+
+function toggleCheck(show) {
+  const box = document.getElementById("checkBox");
+  if (box) box.classList.toggle("hidden", !show);
+}
+
+function generateQR(id, hash) {
+  const qrBox = document.getElementById("qr");
+  if (!qrBox) return;
+
+  qrBox.innerHTML = "";
+  const img = document.createElement("img");
+  img.src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=" +
+    encodeURIComponent(id + "|" + hash);
+  qrBox.appendChild(img);
+}
+
+function clearQR() {
   const qrBox = document.getElementById("qr");
   if (qrBox) qrBox.innerHTML = "";
-  lastCheck = null;
 }
 
 // ===============================
 // VERIFY CHECK
 // ===============================
 window.verifyCheck = function () {
-  const vid = document.getElementById("vid")?.value.trim() || "";
-  const vhash = document.getElementById("vhash")?.value.trim() || "";
+  const vid = getValue("vid");
+  const vhash = getValue("vhash");
   const out = document.getElementById("verifyResult");
 
   if (!out) return;
@@ -80,14 +93,14 @@ window.verifyCheck = function () {
 };
 
 // ===============================
-// PDF (ДЕМО)
+// PDF (DEMO)
 // ===============================
 window.downloadPDF = function () {
   if (!lastCheck) {
     alert("Алдымен чек жасаңыз");
     return;
   }
-  window.print(); // Демо ретінде print функциясы
+  window.print();
 };
 
 // ===============================
@@ -151,24 +164,33 @@ const translations = {
 };
 
 window.setLang = function (lang) {
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.getAttribute("data-i18n");
-    if (translations[lang] && translations[lang][key]) {
-      el.innerText = translations[lang][key];
-    }
-  });
-
-  document.querySelectorAll("[data-i18n-ph]").forEach(el => {
-    const key = el.getAttribute("data-i18n-ph");
-    if (translations[lang] && translations[lang][key]) {
-      el.placeholder = translations[lang][key];
-    }
-  });
-
+  applyText("[data-i18n]", "innerText", translations[lang]);
+  applyText("[data-i18n-ph]", "placeholder", translations[lang]);
   localStorage.setItem("lang", lang);
 };
 
-// DEFAULT LANGUAGE
+// ===============================
+// HELPERS
+// ===============================
+function getValue(id) {
+  return document.getElementById(id)?.value.trim() || "";
+}
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.innerText = value;
+}
+
+function applyText(selector, prop, dict) {
+  document.querySelectorAll(selector).forEach(el => {
+    const key = el.getAttribute(prop === "placeholder" ? "data-i18n-ph" : "data-i18n");
+    if (dict && dict[key]) el[prop] = dict[key];
+  });
+}
+
+// ===============================
+// INIT
+// ===============================
 document.addEventListener("DOMContentLoaded", () => {
   window.setLang(localStorage.getItem("lang") || "kk");
 });
