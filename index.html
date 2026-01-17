@@ -1,100 +1,63 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8">
-  <title>PayFlow</title>
+  <meta charset="UTF-8" />
+  <title>PayFlow MVP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#2563eb">
-
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
+
+  <!-- STYLE -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- QR -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <!-- PDF -->
+  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
-<div class="container">
-  <div class="card">
+  <div class="container">
+    <div class="card">
 
-    <!-- LOGO -->
-    <img src="logo.png" class="main-logo" alt="PayFlow">
+      <!-- LOGO -->
+      <img src="logo.png" class="main-logo">
 
-    <h2>PayFlow</h2>
-    <p>Цифрлық чек генерациясы</p>
+      <h2>PayFlow MVP</h2>
+      <p class="subtitle">Цифрлық чек генерациялау жүйесі</p>
 
-    <!-- САТУШЫ -->
-    <input id="seller" type="text" placeholder="Сатушының аты">
+      <!-- BUYER -->
+      <input id="name" type="text" placeholder="Сатып алушының аты">
 
-    <!-- САТЫП АЛУШЫ -->
-    <input id="buyer" type="text" placeholder="Сатып алушының аты">
+      <!-- PHONE (ONLY NUMBER) -->
+      <input id="phone" type="text" placeholder="Телефон нөмірі" inputmode="numeric">
 
-    <!-- ТЕЛЕФОН -->
-    <input id="phone"
-           type="tel"
-           placeholder="Телефон нөмірі"
-           inputmode="numeric"
-           pattern="[0-9]*"
-           maxlength="11"
-           oninput="onlyNumbers(this)">
+      <!-- PRODUCT -->
+      <input id="product" type="text" placeholder="Қызмет / тауар атауы">
 
-    <!-- ТАУАР -->
-    <input id="item" type="text" placeholder="Тауар / қызмет">
+      <!-- AMOUNT (ONLY NUMBER) -->
+      <input id="amount" type="text" placeholder="Сома (₸)" inputmode="numeric">
 
-    <!-- СОМА -->
-    <input id="amount"
-           type="text"
-           placeholder="Сома (₸)"
-           inputmode="numeric"
-           oninput="onlyNumbers(this)">
+      <!-- PAYMENT -->
+      <select id="payment" onchange="updateLogo()">
+        <option value="">Төлем түрін таңда</option>
+        <option value="Kaspi">Kaspi</option>
+        <option value="Freedom">Freedom</option>
+        <option value="Qiwi">Qiwi</option>
+        <option value="Halyk">Halyk</option>
+      </select>
 
-    <!-- ТӨЛЕМ -->
-    <select id="payment" onchange="updateLogo()">
-      <option value="">Төлем түрін таңдаңыз</option>
-      <option value="Kaspi">Kaspi</option>
-      <option value="Freedom">Freedom</option>
-      <option value="Qiwi">Qiwi</option>
-      <option value="Halyk">Halyk</option>
-    </select>
+      <!-- PAYMENT LOGO -->
+      <img id="paymentLogo" class="pay-logo" style="display:none;">
 
-    <!-- ТӨЛЕМ ЛОГОСЫ -->
-    <img id="payLogo" class="pay-logo" style="display:none">
+      <!-- BUTTON -->
+      <button onclick="generateCheck()">Чек жасау</button>
 
-    <!-- ЧЕК -->
-    <button onclick="generate()">🧾 Чек жасау</button>
-
-    <!-- QR -->
-    <div id="qrcode"></div>
-
-    <!-- ЧЕК КӨРІНІСІ -->
-    <div id="receipt" class="receipt" style="display:none">
-
-      <h3>PayFlow чек</h3>
-
-      <img id="receiptLogo" class="receipt-logo">
-
-      <p><b>Сатушы:</b> <span id="rSeller"></span></p>
-      <p><b>Сатып алушы:</b> <span id="rBuyer"></span></p>
-      <p><b>Телефон:</b> <span id="rPhone"></span></p>
-      <p><b>Тауар:</b> <span id="rItem"></span></p>
-      <p><b>Сома:</b> <span id="rAmount"></span> ₸</p>
-      <p><b>Төлем:</b> <span id="rPayment"></span></p>
-
-      <!-- PDF БАТЫРМА (МІНЕ ОСЫ ЖЕР МАҢЫЗДЫ) -->
-      <button id="pdfBtn"
-              onclick="downloadPDF()"
-              style="display:none;margin-top:10px;">
-        📄 PDF-ке жүктеу
-      </button>
+      <!-- PDF BUTTON -->
+      <button class="pdf-btn" onclick="downloadPDF()">📄 PDF жүктеу</button>
 
     </div>
-
   </div>
-</div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
