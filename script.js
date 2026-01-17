@@ -1,3 +1,4 @@
+// ===== ЛОГОТИП =====
 function updateLogo() {
   const payment = document.getElementById("payment").value;
   const logo = document.getElementById("paymentLogo");
@@ -11,7 +12,6 @@ function updateLogo() {
 
   if (!payment) {
     logo.style.display = "none";
-    logo.src = "";
     return;
   }
 
@@ -19,55 +19,57 @@ function updateLogo() {
   logo.style.display = "block";
 }
 
-// ЧЕК (экран логикасы)
+// ===== ЭКРАН ЧЕК =====
 function generateCheck() {
-  alert("Чек дайын болды");
+  const seller = sellerValue();
+  const buyer = buyerValue();
+  const product = productValue();
+  const amount = amountValue();
+  const payment = paymentValue();
+
+  if (!seller || !buyer || !product || !amount || !payment) {
+    alert("Барлық өрісті толтыр");
+    return;
+  }
+
+  const check = document.getElementById("check");
+  check.style.display = "block";
+
+  check.innerHTML = `
+    <div style="text-align:center;font-weight:bold;">PayFlow</div>
+    <hr>
+    <div>Сатушы: ${seller}</div>
+    <div>Сатып алушы: ${buyer}</div>
+    <div>Тауар: ${product}</div>
+    <div><b>Сома: ${format(amount)}</b></div>
+    <div>Төлем: ${payment}</div>
+    <div style="text-align:center;margin-top:10px;">
+      <img src="logo/${payment.toLowerCase()}.png" width="80">
+    </div>
+    <hr>
+    <div style="font-size:10px;text-align:center;">
+      Demo чек
+    </div>
+  `;
 }
 
-// PDF
+// ===== PDF =====
 function generatePDF() {
+  generateCheck();
+
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF();
 
-  const seller = document.getElementById("seller").value;
-  const iin = document.getElementById("iin").value;
-  const buyer = document.getElementById("buyer").value;
-  const phone = document.getElementById("phone").value;
-  const product = document.getElementById("product").value;
-  const amount = document.getElementById("amount").value;
-  const payment = document.getElementById("payment").value;
-
   pdf.setFont("Courier");
-  pdf.setFontSize(14);
-
-  pdf.text("PayFlow Digital Check", 20, 20);
-
-  pdf.setFontSize(11);
-  pdf.text(`Сатушы: ${seller}`, 20, 35);
-  pdf.text(`ИИН/БИН: ${iin}`, 20, 43);
-  pdf.text(`Сатып алушы: ${buyer}`, 20, 51);
-  pdf.text(`Телефон: ${phone}`, 20, 59);
-  pdf.text(`Тауар: ${product}`, 20, 67);
-
-  pdf.setFontSize(13);
-  pdf.text(`Сома: ${Number(amount).toLocaleString("ru-RU")} ₸`, 20, 80);
-
-  pdf.setFontSize(11);
-  pdf.text(`Төлем түрі: ${payment}`, 20, 92);
-
-  // ЛОГО PDF-ке
-  const logos = {
-    Kaspi: "logo/kaspi.png",
-    Freedom: "logo/freedom.png",
-    Qiwi: "logo/qiwi.png",
-    Halyk: "logo/halyk.png"
-  };
-
-  if (payment && logos[payment]) {
-    pdf.addImage(logos[payment], "PNG", 140, 30, 40, 40);
-  }
-
-  pdf.text("Demo check. Not a real payment.", 20, 130);
+  pdf.text(document.getElementById("check").innerText, 10, 10);
 
   pdf.save("payflow-check.pdf");
 }
+
+// ===== HELPERS =====
+const sellerValue = () => document.getElementById("seller").value.trim();
+const buyerValue = () => document.getElementById("buyer").value.trim();
+const productValue = () => document.getElementById("product").value.trim();
+const amountValue = () => document.getElementById("amount").value.trim();
+const paymentValue = () => document.getElementById("payment").value;
+const format = v => Number(v).toLocaleString("ru-RU") + " ₸";
