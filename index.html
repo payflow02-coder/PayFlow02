@@ -3,50 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <title>PayFlow MVP</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 
   <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- QR -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
+
 <body>
 
-<div class="container">
-  <div class="card">
+  <div class="container">
+    <h2>PayFlow MVP</h2>
+    <p>Цифрлық чек генерациялау</p>
 
-    <img src="logo.png" class="main-logo">
+    <!-- САТУШЫ -->
+    <input id="seller" placeholder="Сатушы аты">
 
-    <h2>PayFlow</h2>
-    <p>Цифрлық чек (Demo)</p>
+    <input id="sellerBin" placeholder="Сатушы ИИН / БИН"
+           inputmode="numeric"
+           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
-    <input id="seller" placeholder="Сатушының аты / ИП">
-    <input id="iin" placeholder="ИИН / БИН" inputmode="numeric">
+    <!-- САТЫП АЛУШЫ -->
+    <input id="buyer" placeholder="Сатып алушы аты">
 
-    <input id="name" placeholder="Сатып алушының аты">
-    <input id="phone" placeholder="Телефон нөмірі" inputmode="numeric">
-    <input id="product" placeholder="Тауар / қызмет">
-    <input id="amount" placeholder="Сома (₸)" inputmode="numeric">
+    <input id="phone" placeholder="Телефон"
+           inputmode="numeric"
+           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
+    <!-- ТАУАР -->
+    <input id="item" placeholder="Тауар">
+
+    <input id="amount" placeholder="Сома (₸)"
+           inputmode="numeric"
+           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+    <!-- ТӨЛЕМ -->
     <select id="payment" onchange="updateLogo()">
-      <option value="">Төлем түрін таңда</option>
+      <option value="">Төлем түрін таңдаңыз</option>
       <option value="Kaspi">Kaspi</option>
       <option value="Freedom">Freedom</option>
       <option value="Qiwi">Qiwi</option>
       <option value="Halyk">Halyk</option>
     </select>
 
-    <img id="paymentLogo" class="pay-logo" style="display:none">
+    <img id="paymentLogo" style="display:none">
 
-    <button onclick="generateCheck()">🧾 Чек жасау</button>
-    <button class="pdf-btn" onclick="downloadPDF()">📄 PDF жүктеу</button>
-
+    <button onclick="generatePDF()">PDF жүктеу</button>
   </div>
-</div>
 
-<script src="script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
