@@ -1,7 +1,6 @@
-// ====== ТӨЛЕМ ЛОГОТИПІН ЖАҢАРТУ ======
 function updateLogo() {
-  const select = document.getElementById("payment");
-  const img = document.getElementById("paymentLogo");
+  const payment = document.getElementById("payment").value;
+  const logo = document.getElementById("paymentLogo");
 
   const logos = {
     Kaspi: "logo/kaspi.png",
@@ -10,118 +9,65 @@ function updateLogo() {
     Halyk: "logo/halyk.png"
   };
 
-  const value = select.value;
-
-  if (logos[value]) {
-    img.src = logos[value];
-    img.style.display = "block";
-  } else {
-    img.src = "";
-    img.style.display = "none";
-  }
-}
-
-// ====== ТЕК САН ЕНГІЗУ ======
-function allowOnlyNumbers(id) {
-  const input = document.getElementById(id);
-  input.addEventListener("input", () => {
-    input.value = input.value.replace(/\D/g, "");
-  });
-}
-
-allowOnlyNumbers("iin");
-allowOnlyNumbers("phone");
-allowOnlyNumbers("amount");
-
-// ====== СОМАНЫ ₸ ФОРМАТТАУ ======
-function formatKZT(value) {
-  return Number(value).toLocaleString("ru-RU") + " ₸";
-}
-
-// ====== PDF + QR ГЕНЕРАЦИЯ ======
-function generatePDF() {
-  const seller = document.getElementById("seller").value.trim();
-  const iin = document.getElementById("iin").value.trim();
-  const buyer = document.getElementById("buyer").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const item = document.getElementById("item").value.trim();
-  const amount = document.getElementById("amount").value.trim();
-  const payment = document.getElementById("payment").value;
-
-  if (!seller || !iin || !buyer || !phone || !item || !amount || !payment) {
-    alert("Барлық өрістерді толық толтырыңыз");
+  if (!payment) {
+    logo.style.display = "none";
+    logo.src = "";
     return;
   }
 
+  logo.src = logos[payment];
+  logo.style.display = "block";
+}
+
+// ЧЕК (экран логикасы)
+function generateCheck() {
+  alert("Чек дайын болды");
+}
+
+// PDF
+function generatePDF() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({
-    orientation: "portrait",
-    unit: "mm",
-    format: [80, 180]
-  });
+  const pdf = new jsPDF();
 
-  let y = 10;
+  const seller = document.getElementById("seller").value;
+  const iin = document.getElementById("iin").value;
+  const buyer = document.getElementById("buyer").value;
+  const phone = document.getElementById("phone").value;
+  const product = document.getElementById("product").value;
+  const amount = document.getElementById("amount").value;
+  const payment = document.getElementById("payment").value;
 
-  doc.setFont("courier", "bold");
-  doc.setFontSize(14);
-  doc.text("PayFlow", 40, y, { align: "center" });
+  pdf.setFont("Courier");
+  pdf.setFontSize(14);
 
-  y += 6;
-  doc.setFontSize(8);
-  doc.setFont("courier", "normal");
-  doc.text("DEMO CHECK", 40, y, { align: "center" });
+  pdf.text("PayFlow Digital Check", 20, 20);
 
-  y += 8;
-  doc.text(`Сатушы: ${seller}`, 5, y); y += 5;
-  doc.text(`ИИН/БИН: ${iin}`, 5, y); y += 5;
-  doc.text(`Сатып алушы: ${buyer}`, 5, y); y += 5;
-  doc.text(`Телефон: ${phone}`, 5, y); y += 5;
-  doc.text(`Тауар: ${item}`, 5, y); y += 6;
+  pdf.setFontSize(11);
+  pdf.text(`Сатушы: ${seller}`, 20, 35);
+  pdf.text(`ИИН/БИН: ${iin}`, 20, 43);
+  pdf.text(`Сатып алушы: ${buyer}`, 20, 51);
+  pdf.text(`Телефон: ${phone}`, 20, 59);
+  pdf.text(`Тауар: ${product}`, 20, 67);
 
-  doc.setFont("courier", "bold");
-  doc.text(`Сома: ${formatKZT(amount)}`, 5, y);
-  y += 8;
+  pdf.setFontSize(13);
+  pdf.text(`Сома: ${Number(amount).toLocaleString("ru-RU")} ₸`, 20, 80);
 
-  doc.setFont("courier", "normal");
-  doc.text(`Төлем: ${payment}`, 5, y);
-  y += 8;
+  pdf.setFontSize(11);
+  pdf.text(`Төлем түрі: ${payment}`, 20, 92);
 
-  // ====== ТӨЛЕМ ЛОГОТИПІ PDF ======
-  const logoMap = {
+  // ЛОГО PDF-ке
+  const logos = {
     Kaspi: "logo/kaspi.png",
     Freedom: "logo/freedom.png",
     Qiwi: "logo/qiwi.png",
     Halyk: "logo/halyk.png"
   };
 
-  const img = new Image();
-  img.src = logoMap[payment];
+  if (payment && logos[payment]) {
+    pdf.addImage(logos[payment], "PNG", 140, 30, 40, 40);
+  }
 
-  img.onload = function () {
-    doc.addImage(img, "PNG", 25, y, 30, 12);
-    y += 18;
+  pdf.text("Demo check. Not a real payment.", 20, 130);
 
-    // ====== QR ======
-    const qrData = window.location.origin + window.location.pathname.replace("index.html", "") + "verify.html";
-
-    const qr = new QRCode(document.createElement("div"), {
-      text: qrData,
-      width: 100,
-      height: 100
-    });
-
-    setTimeout(() => {
-      const qrImg = qr._el.querySelector("img");
-      doc.addImage(qrImg.src, "PNG", 20, y, 40, 40);
-      y += 45;
-
-      doc.setFontSize(7);
-      doc.text("Scan to verify", 40, y, { align: "center" });
-
-      y += 5;
-      doc.text("Бұл чек PayFlow демо жүйесінде жасалған", 40, y, { align: "center" });
-
-      doc.save("payflow-check.pdf");
-    }, 300);
-  };
+  pdf.save("payflow-check.pdf");
 }
