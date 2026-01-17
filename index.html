@@ -4,77 +4,55 @@
   <meta charset="UTF-8">
   <title>PayFlow</title>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- JS -->
-  <script src="script.js" defer></script>
-</head>
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+</head>
 <body>
 
-  <header class="header">
-    <h1>PayFlow</h1>
-  </header>
+<div class="card">
+  <h2>PayFlow</h2>
 
-  <main class="container">
+  <input id="seller" placeholder="Сатушы аты">
 
-    <div class="card">
+  <input id="iin" placeholder="Сатушы ИИН / БИН"
+         inputmode="numeric"
+         maxlength="12"
+         oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
-      <input type="text" placeholder="Сатушы аты" id="sellerName">
+  <input id="buyer" placeholder="Сатып алушы аты">
 
-      <input
-        type="text"
-        placeholder="Сатушы ИИН / БИН"
-        id="sellerIIN"
-        maxlength="12"
-        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-      >
+  <input id="phone" placeholder="Сатып алушы телефон нөмірі"
+         inputmode="numeric"
+         oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
-      <input type="text" placeholder="Сатып алушы аты" id="buyerName">
+  <input id="product" placeholder="Тауар / қызмет атауы">
 
-      <input
-        type="text"
-        placeholder="Сатып алушы телефон нөмірі"
-        id="buyerPhone"
-        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-      >
+  <input id="amount" placeholder="Сома (₸)"
+         inputmode="numeric"
+         oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
-      <input type="text" placeholder="Тауар / қызмет атауы" id="product">
+  <select id="payment" onchange="updateLogo()">
+    <option value="">Төлем түрін таңдаңыз</option>
+    <option value="Kaspi">Kaspi</option>
+    <option value="Freedom">Freedom</option>
+    <option value="Qiwi">Qiwi</option>
+    <option value="Halyk">Halyk</option>
+  </select>
 
-      <input
-        type="text"
-        placeholder="Сома (₸)"
-        id="amount"
-        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-      >
+  <!-- ЛОГО -->
+  <img id="paymentLogo"
+       src=""
+       alt="Payment logo"
+       style="display:none; width:120px; margin:10px auto;">
 
-      <!-- ТӨЛЕМ ТҮРІ -->
-      <select id="payment" onchange="updateLogo()">
-        <option value="">Төлем түрін таңдаңыз</option>
-        <option value="Kaspi">Kaspi</option>
-        <option value="Freedom">Freedom</option>
-        <option value="Qiwi">Qiwi</option>
-        <option value="Halyk">Halyk</option>
-      </select>
+  <!-- БӨЛЕК БАТЫРМАЛАР -->
+  <button onclick="generateCheck()">Чек жасау</button>
+  <button onclick="generatePDF()">PDF жүктеу</button>
+</div>
 
-      <!-- ЛОГОТИП (БАСТАПҚЫДА ЖАСЫРЫН) -->
-      <div style="text-align:center;">
-        <img
-          id="paymentLogo"
-          src=""
-          alt=""
-          style="display:none; width:120px; margin-top:10px;"
-        >
-      </div>
-
-      <button onclick="generatePDF()">
-        Чек жасау / PDF жүктеу
-      </button>
-
-    </div>
-
-  </main>
-
+<script src="script.js"></script>
 </body>
 </html>
