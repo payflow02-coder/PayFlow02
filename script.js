@@ -1,13 +1,20 @@
-// 🔒 ONLY NUMBER
-["phone", "amount", "iin"].forEach(id => {
-  document.getElementById(id).addEventListener("input", function () {
-    this.value = this.value.replace(/\D/g, "");
+document.addEventListener("DOMContentLoaded", () => {
+
+  // 🔒 ONLY NUMBER (телефон, сома, ИИН/БИН)
+  ["phone", "amount", "iin"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("input", function () {
+        this.value = this.value.replace(/\D/g, "");
+      });
+    }
   });
+
 });
 
 // 💳 PAYMENT LOGO
 function updateLogo() {
-  const p = payment.value;
+  const payment = document.getElementById("payment").value;
   const logo = document.getElementById("paymentLogo");
 
   const logos = {
@@ -17,8 +24,8 @@ function updateLogo() {
     Halyk: "logo/halyk.png"
   };
 
-  if (logos[p]) {
-    logo.src = logos[p];
+  if (logos[payment]) {
+    logo.src = logos[payment];
     logo.style.display = "block";
   } else {
     logo.style.display = "none";
