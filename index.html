@@ -4,88 +4,73 @@
   <meta charset="UTF-8">
   <title>PayFlow — Цифрлық чек</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: Arial; text-align:center; margin:50px 0; background:#f4f4f4; }
-    .card { background:white; width:400px; margin:auto; padding:30px; border-radius:10px; box-shadow:0 0 15px rgba(0,0,0,0.1);}
-    input, select, textarea { width:90%; padding:8px; margin:8px 0; border-radius:5px; border:1px solid #ccc; }
-    button { padding:12px 25px; font-size:16px; margin-top:15px; cursor:pointer; border-radius:5px; background:#2ecc71; color:white; border:none; }
-    button:hover{background:#27ae60;}
-    .logo { height:30px; vertical-align:middle; margin-left:10px; }
-    .qr-preview{margin-top:15px;}
-    .hidden{display:none;}
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2563eb">
 </head>
 <body>
 
+<!-- LANGUAGE SWITCH -->
+<div class="lang-switch">
+  <button onclick="setLang('kk')">KZ</button>
+  <button onclick="setLang('ru')">RU</button>
+  <button onclick="setLang('en')">EN</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <img src="assets/logo.png" class="hero-logo">
+  <h1 data-i18n="heroTitle">PayFlow</h1>
+  <p class="hero-text" data-i18n="heroText">
+    Төлем жасалғанын дәлелдейтін цифрлық чек сервисі.  
+    ID, Hash және QR арқылы қорғалған.
+  </p>
+  <a href="#service" class="btn big" data-i18n="makeCheck">Чек жасау</a>
+</section>
+
+<!-- SERVICE -->
+<section id="service" class="service">
   <div class="card">
-    <h1>📱 PayFlow MVP</h1>
-    <p>Сатып алушы құқығын қорғайтын цифрлық чек жүйесі</p>
+    <h2 data-i18n="create">Цифрлық чек жасау</h2>
 
-    <!-- Міндетті өрістер -->
-    <input type="text" id="name" placeholder="Сатып алушының аты"><br>
-    <input type="text" id="phone" placeholder="Телефон нөмірі"><br>
-    <input type="text" id="item" placeholder="Қызмет / тауар атауы"><br>
-    <input type="text" id="amount" placeholder="Сома"><br>
+    <input id="payer" data-i18n-ph="payer" placeholder="Төлеуші">
+    <input id="receiver" data-i18n-ph="receiver" placeholder="Алушы">
+    <input id="amount" type="number" data-i18n-ph="amount" placeholder="Сома (₸)">
 
-    <!-- Төлем қосымшасын таңдау -->
-    <select id="payment" onchange="showLogo()">
+    <select id="paymentMethod">
       <option value="">Төлем қосымшасын таңда</option>
       <option value="Freedom">Freedom</option>
       <option value="Kaspi">Kaspi</option>
       <option value="Qiwi">Qiwi</option>
+      <option value="Halyk">Халық банк</option>
     </select>
-    <img id="paymentLogo" class="logo" src="" alt=""><br>
+    <div id="paymentLogo" style="margin:10px 0;"></div>
 
-    <!-- Қосымша өріс (ИПС / ескертпе) -->
-    <textarea id="note" placeholder="Ескертпе / ИПС (қолмен жазуға болады)"></textarea><br>
+    <textarea id="chat" placeholder="Чат (ескертпе орнына)"></textarea>
 
-    <button onclick="createReceipt()">Чек жасау</button>
+    <button class="btn" onclick="generateCheck()" data-i18n="makeCheck">Чек жасау</button>
+    <button class="btn secondary" onclick="downloadPDF()" data-i18n="pdf">PDF жүктеу</button>
 
-    <div class="qr-preview">
-      <img id="qrImage" src="" alt="">
+    <div id="checkBox" class="check hidden">
+      <p><b data-i18n="payer">Төлеуші:</b> <span id="outPayer"></span></p>
+      <p><b data-i18n="receiver">Алушы:</b> <span id="outReceiver"></span></p>
+      <p><b data-i18n="amount">Сома:</b> <span id="outAmount"></span> ₸</p>
+      <p><b>Check ID:</b> <span id="checkId"></span></p>
+      <p><b>Hash:</b> <span id="hash"></span></p>
+      <p><b>Төлем қосымшасы:</b> <span id="outPayment"></span></p>
+      <p><b>Чат:</b> <span id="outChat"></span></p>
+
+      <p class="success" data-i18n="success">✅ Төлем расталды</p>
+      <p class="secure" data-i18n="secure">
+        Бұл чек PayFlow жүйесінде тіркелген және өзгертілмейді
+      </p>
+
+      <div id="qr"></div>
     </div>
+
   </div>
+</section>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-  <script>
-    function showLogo(){
-      const p=document.getElementById('payment').value;
-      const l=document.getElementById('paymentLogo');
-      l.src= p==="Freedom"?"https://i.imgur.com/4QyMfxt.png":
-            p==="Kaspi"?"https://i.imgur.com/h2rQ5aU.png":
-            p==="Qiwi"?"https://i.imgur.com/5QY5W3R.png":"";
-    }
-
-    function createReceipt(){
-      const name=document.getElementById('name').value.trim();
-      const phone=document.getElementById('phone').value.trim();
-      const item=document.getElementById('item').value.trim();
-      const amount=document.getElementById('amount').value.trim();
-      const payment=document.getElementById('payment').value;
-      const note=document.getElementById('note').value.trim();
-      if(!name||!phone||!item||!amount||!payment){alert("Барлық міндетті өрістерді толтырыңыз!");return;}
-
-      const id=Math.floor(Math.random()*1000000);
-      const date=new Date().toLocaleString();
-      const qrData=`ID: ${id}\nДата: ${date}\nАты: ${name}\nТелефон: ${phone}\nҚызмет: ${item}\nСома: ${amount}\nТөлем: ${payment}\nЕскертпе: ${note}\n✅ PayFlow`;
-
-      QRCode.toDataURL(qrData,{width:120,margin:1},function(err,url){
-        document.getElementById('qrImage').src=url;
-      });
-
-      alert(
-        `🧾 Чек жасалды!\n\nЧек нөмірі: ${id}\nДата/уақыт: ${date}\nАты: ${name}\nТелефон: ${phone}\nҚызмет: ${item}\nСома: ${amount}\nТөлем қосымшасы: ${payment}\nЕскертпе/ИПС: ${note}\n\n🔐 PayFlow белгісі бар\nQR код генерацияланды (демо)`
-      );
-
-      document.getElementById('name').value="";
-      document.getElementById('phone').value="";
-      document.getElementById('item').value="";
-      document.getElementById('amount').value="";
-      document.getElementById('payment').value="";
-      document.getElementById('paymentLogo').src="";
-      document.getElementById('note').value="";
-    }
-  </script>
-
+<script src="script.js"></script>
 </body>
 </html>
