@@ -7,10 +7,10 @@ let lastCheck = null;
 // CHECK GENERATION
 // ===============================
 window.generateCheck = function () {
-  const payer = document.getElementById("payer").value.trim();
-  const receiver = document.getElementById("receiver").value.trim();
-  const amount = document.getElementById("amount").value.trim();
-  const item = document.getElementById("item") ? document.getElementById("item").value.trim() : "";
+  const payer = document.getElementById("payer")?.value.trim() || "";
+  const receiver = document.getElementById("receiver")?.value.trim() || "";
+  const amount = document.getElementById("amount")?.value.trim() || "";
+  const item = document.getElementById("item")?.value.trim() || "";
 
   if (!payer || !receiver || !amount || Number(amount) <= 0) {
     alert("Барлық міндетті өрістерді толтырыңыз!");
@@ -26,31 +26,34 @@ window.generateCheck = function () {
   const hash = btoa(unescape(encodeURIComponent(raw))).slice(0, 32);
 
   // HTML-ға шығару
-  document.getElementById("outPayer").innerText = payer;
-  document.getElementById("outReceiver").innerText = receiver;
-  document.getElementById("outAmount").innerText = amount;
+  document.getElementById("outPayer")?.innerText = payer;
+  document.getElementById("outReceiver")?.innerText = receiver;
+  document.getElementById("outAmount")?.innerText = amount;
   document.getElementById("outItem")?.innerText = item;
-  document.getElementById("checkId").innerText = id;
-  document.getElementById("hash").innerText = hash;
+  document.getElementById("checkId")?.innerText = id;
+  document.getElementById("hash")?.innerText = hash;
 
-  document.getElementById("checkBox").classList.remove("hidden");
+  document.getElementById("checkBox")?.classList.remove("hidden");
 
   // QR-код генерациясы
   const qrBox = document.getElementById("qr");
-  qrBox.innerHTML = "";
-  const img = document.createElement("img");
-  img.src =
-    "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=" +
-    encodeURIComponent(id + "|" + hash);
-  qrBox.appendChild(img);
+  if (qrBox) {
+    qrBox.innerHTML = "";
+    const img = document.createElement("img");
+    img.src =
+      "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=" +
+      encodeURIComponent(id + "|" + hash);
+    qrBox.appendChild(img);
+  }
 
   lastCheck = { id, hash };
 };
 
 // Жасырын чек
 function hideCheck() {
-  document.getElementById("checkBox").classList.add("hidden");
-  document.getElementById("qr").innerHTML = "";
+  document.getElementById("checkBox")?.classList.add("hidden");
+  const qrBox = document.getElementById("qr");
+  if (qrBox) qrBox.innerHTML = "";
   lastCheck = null;
 }
 
@@ -58,9 +61,11 @@ function hideCheck() {
 // VERIFY CHECK
 // ===============================
 window.verifyCheck = function () {
-  const vid = document.getElementById("vid").value.trim();
-  const vhash = document.getElementById("vhash").value.trim();
+  const vid = document.getElementById("vid")?.value.trim() || "";
+  const vhash = document.getElementById("vhash")?.value.trim() || "";
   const out = document.getElementById("verifyResult");
+
+  if (!out) return;
 
   if (!vid || !vhash) {
     out.innerText = "❌ ID және Hash енгізіңіз";
@@ -148,14 +153,14 @@ const translations = {
 window.setLang = function (lang) {
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       el.innerText = translations[lang][key];
     }
   });
 
   document.querySelectorAll("[data-i18n-ph]").forEach(el => {
     const key = el.getAttribute("data-i18n-ph");
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       el.placeholder = translations[lang][key];
     }
   });
@@ -165,5 +170,5 @@ window.setLang = function (lang) {
 
 // DEFAULT LANGUAGE
 document.addEventListener("DOMContentLoaded", () => {
-  setLang(localStorage.getItem("lang") || "kk");
+  window.setLang(localStorage.getItem("lang") || "kk");
 });
