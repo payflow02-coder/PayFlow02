@@ -1,3 +1,6 @@
+/* ===============================
+   GLOBAL
+=============================== */
 * {
   box-sizing: border-box;
   font-family: Arial, sans-serif;
@@ -16,7 +19,9 @@ section {
   text-align: center;
 }
 
-/* HERO */
+/* ===============================
+   HERO
+=============================== */
 .hero {
   background: linear-gradient(135deg,#2563eb,#3b82f6);
   color: white;
@@ -31,7 +36,9 @@ section {
   margin: 15px auto;
 }
 
-/* BUTTONS */
+/* ===============================
+   BUTTONS
+=============================== */
 .btn {
   padding: 14px 24px;
   background: #2563eb;
@@ -50,7 +57,9 @@ section {
   margin-top: 10px;
 }
 
-/* FEATURES */
+/* ===============================
+   FEATURES
+=============================== */
 .features ul {
   list-style: none;
   padding: 0;
@@ -63,7 +72,9 @@ section {
   margin-bottom: 8px;
 }
 
-/* CARD */
+/* ===============================
+   CARD
+=============================== */
 .card {
   background: white;
   max-width: 360px;
@@ -79,7 +90,7 @@ section {
   to { transform: scale(1); opacity: 1 }
 }
 
-input {
+input, textarea, select {
   width: 100%;
   padding: 12px;
   margin-bottom: 12px;
@@ -115,13 +126,17 @@ input {
   margin-top: 6px;
 }
 
-/* VERIFY */
+/* ===============================
+   VERIFY
+=============================== */
 .verify input {
   max-width: 260px;
   margin: 5px;
 }
 
-/* FOOTER */
+/* ===============================
+   FOOTER
+=============================== */
 footer {
   background: #111;
   color: #aaa;
@@ -133,7 +148,9 @@ footer {
   color: #777;
 }
 
-/* MOBILE */
+/* ===============================
+   MOBILE
+=============================== */
 @media (max-width: 600px) {
   .btn { width: 100%; }
   .big {
@@ -146,14 +163,19 @@ footer {
   }
 }
 
-/* DARK MODE */
+/* ===============================
+   DARK MODE
+=============================== */
 @media (prefers-color-scheme: dark) {
   body { background: #0f172a; color: #e5e7eb; }
   .card { background: #020617; }
-  input { background: #020617; color: white; border-color: #334155; }
+  input, textarea, select { background: #020617; color: white; border-color: #334155; }
   footer { background: black; }
 }
-/* LANGUAGE SWITCH */
+
+/* ===============================
+   LANGUAGE SWITCH
+=============================== */
 .lang-switch {
   position: fixed;
   top: 15px;
@@ -171,8 +193,4 @@ footer {
   cursor: pointer;
   background: rgba(255,255,255,0.9);
   color: #111;
-}
-
-.lang-switch button:hover {
-  background: #e5e7eb;
 }
