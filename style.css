@@ -1,43 +1,76 @@
-body{
-  margin:0;
-  font-family:Arial;
-  background:#2563eb;
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f6ff;
+  margin: 0;
+  padding: 20px;
 }
-.top{
-  background:#1e40af;
-  color:#fff;
-  padding:15px;
-  display:flex;
-  align-items:center;
+
+.title {
+  text-align: center;
+  color: #1e40af;
 }
-.main-logo{width:40px;margin-right:10px}
-.card{
-  background:#fff;
-  max-width:420px;
-  margin:30px auto;
-  padding:20px;
-  border-radius:14px;
+
+.card {
+  max-width: 360px;
+  margin: auto;
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
 }
-input,select,button{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
+
+input, select, button {
+  width: 100%;
+  margin: 6px 0;
+  padding: 10px;
+  font-size: 14px;
 }
-button{
-  background:#2563eb;
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
+
+button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
 }
-.pay-logo{
-  display:none;
-  width:120px;
-  margin:10px auto;
+
+.logo-box {
+  background: #2563eb;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 10px 0;
 }
-.payment-logo{
-  display: none;
-  margin: 12px auto;
-  width: 80px;
-  height: auto;
+
+.logo-box img {
+  width: 100px;
+}
+
+/* ЧЕК */
+#receipt {
+  background: #fff;
+  color: #000;
+  font-family: "Courier New", monospace;
+  width: 300px;
+  margin: 20px auto;
+  padding: 14px;
+  border: 1px dashed #999;
+}
+
+#receipt h2 {
+  text-align: center;
+}
+
+.amount {
+  font-weight: bold;
+  text-align: right;
+}
+
+.demo {
+  text-align: center;
+  font-size: 11px;
+  color: #666;
+}
+
+.qr {
+  text-align: center;
+  margin-top: 10px;
 }
