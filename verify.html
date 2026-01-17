@@ -4,61 +4,38 @@
   <meta charset="UTF-8">
   <title>Чек тексеру</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f3f4f6;
-      margin: 0;
-    }
-    .card {
-      max-width: 360px;
-      margin: 40px auto;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 14px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.1);
-    }
-    .ok {
-      color: green;
-      font-weight: bold;
-    }
-    .bad {
-      color: red;
-      font-weight: bold;
-    }
-  </style>
+
+  <!-- COMMON CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="card">
-  <h2>Чек тексеру</h2>
-  <p id="result">Тексерілуде...</p>
-</div>
+  <section class="verify">
+    <div class="card">
+      <h2 data-i18n="verify">Чек тексеру</h2>
 
-<script>
-  // URL параметрлерін алу
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-  const hash = params.get("hash");
+      <input
+        type="text"
+        id="vid"
+        placeholder="Check ID"
+        data-i18n-ph="check"
+      >
 
-  const result = document.getElementById("result");
+      <input
+        type="text"
+        id="vhash"
+        placeholder="Hash"
+      >
 
-  if (!id || !hash) {
-    result.innerText = "❌ Чек деректері табылмады";
-    result.className = "bad";
-  } else {
-    const savedHash = localStorage.getItem(id);
+      <button class="btn" onclick="verifyCheck()">
+        Тексеру
+      </button>
 
-    if (savedHash === hash) {
-      result.innerText = "✅ Чек расталды";
-      result.className = "ok";
-    } else {
-      result.innerText = "❌ Жалған немесе жарамсыз чек";
-      result.className = "bad";
-    }
-  }
-</script>
+      <p id="verifyResult"></p>
+    </div>
+  </section>
 
+  <!-- COMMON JS -->
+  <script src="script.js"></script>
 </body>
 </html>
