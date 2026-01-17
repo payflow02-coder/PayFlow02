@@ -1,18 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-  // 🔒 ONLY NUMBER (телефон, сома, ИИН/БИН)
-  ["phone", "amount", "iin"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener("input", function () {
-        this.value = this.value.replace(/\D/g, "");
-      });
-    }
-  });
-
-});
-
-// 💳 PAYMENT LOGO
 function updateLogo() {
   const payment = document.getElementById("payment").value;
   const logo = document.getElementById("paymentLogo");
@@ -27,47 +12,41 @@ function updateLogo() {
   if (logos[payment]) {
     logo.src = logos[payment];
     logo.style.display = "block";
+    logo.style.width = "120px";
+    logo.style.marginTop = "10px";
   } else {
     logo.style.display = "none";
   }
 }
 
-// 🧾 CHECK
-function generateCheck() {
-  if (![seller, iin, name, phone, product, amount, payment].every(i => i.value)) {
-    alert("❗ Барлық жолды толтыр");
-    return;
-  }
-  alert("✅ Чек дайын! PDF жүктеуге болады");
-}
+function generatePDF() {
+  const seller = document.getElementById("seller").value;
+  const sellerBin = document.getElementById("sellerBin").value;
+  const buyer = document.getElementById("buyer").value;
+  const phone = document.getElementById("phone").value;
+  const item = document.getElementById("item").value;
+  const amount = document.getElementById("amount").value;
+  const payment = document.getElementById("payment").value;
 
-// 📄 PDF + QR
-function downloadPDF() {
-  if (![seller, iin, name, phone, product, amount, payment].every(i => i.value)) {
-    alert("❗ Барлық жолды толтыр");
+  if (!seller || !sellerBin || !buyer || !phone || !item || !amount || !payment) {
+    alert("Барлық жолды толтыр");
     return;
   }
 
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  const checkId = "PF-" + Date.now();
-  const verifyURL =
-    `${location.origin}${location.pathname.replace("index.html","")}verify.html?id=${checkId}`;
-
-  doc.setFontSize(18);
+  doc.setFontSize(16);
   doc.text("PayFlow Digital Check", 20, 20);
-  doc.line(20, 25, 190, 25);
 
   doc.setFontSize(12);
-  doc.text(`Check ID: ${checkId}`, 20, 40);
-  doc.text(`Seller: ${seller.value}`, 20, 55);
-  doc.text(`IIN/BIN: ${iin.value}`, 20, 65);
-  doc.text(`Buyer: ${name.value}`, 20, 75);
-  doc.text(`Phone: ${phone.value}`, 20, 85);
-  doc.text(`Product: ${product.value}`, 20, 95);
-  doc.text(`Amount: ${amount.value} ₸`, 20, 105);
-  doc.text(`Payment: ${payment.value}`, 20, 115);
+  doc.text("Сатушы: " + seller, 20, 40);
+  doc.text("ИИН / БИН: " + sellerBin, 20, 50);
+  doc.text("Сатып алушы: " + buyer, 20, 60);
+  doc.text("Телефон: " + phone, 20, 70);
+  doc.text("Тауар: " + item, 20, 80);
+  doc.text("Сома: " + amount + " ₸", 20, 90);
+  doc.text("Төлем түрі: " + payment, 20, 100);
 
   const logos = {
     Kaspi: "logo/kaspi.png",
@@ -76,18 +55,9 @@ function downloadPDF() {
     Halyk: "logo/halyk.png"
   };
 
-  if (logos[payment.value]) {
-    doc.addImage(logos[payment.value], "PNG", 140, 55, 40, 40);
+  if (logos[payment]) {
+    doc.addImage(logos[payment], "PNG", 140, 40, 40, 40);
   }
 
-  QRCode.toDataURL(verifyURL, function (err, url) {
-    if (!err) {
-      doc.addImage(url, "PNG", 20, 130, 50, 50);
-      doc.text("Scan to verify", 20, 185);
-
-      doc.setFontSize(10);
-      doc.text("Demo check. Not a real payment document.", 20, 280);
-      doc.save(`PayFlow_${checkId}.pdf`);
-    }
-  });
+  doc.save("PayFlow_Check.pdf");
 }
