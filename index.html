@@ -1,127 +1,62 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-<meta charset="UTF-8">
-<title>PayFlow MVP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="manifest.json">
+  <meta charset="UTF-8" />
+  <title>PayFlow MVP</title>
 
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2563eb" />
 
-<style>
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(180deg,#2563eb,#1e40af);
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  padding:20px
-}
-.app{
-  background:#fff;
-  width:100%;
-  max-width:380px;
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 15px 30px rgba(0,0,0,.3)
-}
-header{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  margin-bottom:20px
-}
-header img{width:42px;height:42px}
-h1{margin:0;font-size:20px;color:#1e3a8a}
-p{font-size:13px;color:#475569}
-input,select,button{
-  width:100%;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:10px;
-  border:1px solid #c7d2fe;
-  font-size:14px
-}
-button{
-  background:#2563eb;
-  color:#fff;
-  border:none;
-  font-weight:bold;
-  cursor:pointer
-}
-button:hover{background:#1d4ed8}
-.pay-logo{text-align:center;margin:10px 0}
-.pay-logo img{width:90px;display:none}
-#qrcode{display:flex;justify-content:center;margin-top:15px}
-</style>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-
 <body>
-<div class="app">
 
-<header>
-  <img src="logo.png">
-  <div>
-    <h1>PayFlow MVP</h1>
-    <p>Цифрлық чек генерациялау жүйесі</p>
+  <div class="container">
+    <div class="card">
+
+      <!-- LOGO -->
+      <img src="logo.png" alt="PayFlow" class="main-logo" />
+
+      <h2>PayFlow MVP</h2>
+      <p>Цифрлық чек генерациялау жүйесі</p>
+
+      <input id="name" type="text" placeholder="Сатып алушының аты" />
+
+      <input id="phone"
+             type="text"
+             placeholder="Телефон нөмірі"
+             inputmode="numeric"
+             maxlength="11"
+             oninput="onlyNumbers(this)" />
+
+      <input id="item" type="text" placeholder="Қызмет / тауар атауы" />
+
+      <input id="amount"
+             type="text"
+             placeholder="Сома (₸)"
+             oninput="onlyNumbers(this)" />
+
+      <select id="payment" onchange="updateLogo()">
+        <option value="">Төлем түрін таңдаңыз</option>
+        <option value="Kaspi">Kaspi</option>
+        <option value="Freedom">Freedom</option>
+        <option value="Qiwi">Qiwi</option>
+        <option value="Halyk">Halyk</option>
+      </select>
+
+      <img id="payLogo" class="pay-logo" style="display:none" />
+
+      <button onclick="generate()">Чек жасау</button>
+
+      <div id="qrcode"></div>
+
+    </div>
   </div>
-</header>
 
-<input id="name" placeholder="Сатып алушының аты">
-<input id="phone" type="tel" placeholder="Телефон нөмірі" inputmode="numeric" pattern="[0-9]+">
-<input id="item" placeholder="Қызмет / тауар атауы">
-<input id="amount" type="number" placeholder="Сома (₸)" min="1">
-
-<select id="payment" onchange="showLogo()">
-  <option value="">Төлем қосымшасын таңдаңыз</option>
-  <option value="Kaspi">Kaspi</option>
-  <option value="Freedom">Freedom</option>
-  <option value="Qiwi">Qiwi</option>
-  <option value="Halyk">Halyk</option>
-</select>
-
-<div class="pay-logo">
-  <img id="Kaspi" src="kaspi.png">
-  <img id="Freedom" src="freedom.png">
-  <img id="Qiwi" src="qiwi.png">
-  <img id="Halyk" src="halyk.png">
-</div>
-
-<button onclick="generate()">Чек жасау</button>
-<div id="qrcode"></div>
-
-</div>
-
-<script>
-function showLogo(){
-  document.querySelectorAll('.pay-logo img').forEach(i=>i.style.display='none');
-  const v=document.getElementById('payment').value;
-  if(v) document.getElementById(v).style.display='block';
-}
-
-function generate(){
-  const n=name.value,p=phone.value,i=item.value,a=amount.value,py=payment.value;
-  if(!n||!p||!i||!a||!py){alert("Барлық өрісті толтыр!");return;}
-
-  qrcode.innerHTML="";
-  new QRCode(qrcode,{
-    text:`PayFlow чек | ${n} | ${a}₸ | ${py}`,
-    width:128,height:128
-  });
-
-  const {jsPDF}=window.jspdf;
-  const pdf=new jsPDF();
-  pdf.text("PayFlow Demo Check",20,20);
-  pdf.text(`Аты: ${n}`,20,40);
-  pdf.text(`Телефон: ${p}`,20,50);
-  pdf.text(`Тауар: ${i}`,20,60);
-  pdf.text(`Сома: ${a} ₸`,20,70);
-  pdf.text(`Төлем: ${py}`,20,80);
-  pdf.save("payflow-check.pdf");
-}
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
