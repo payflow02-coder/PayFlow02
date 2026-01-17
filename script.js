@@ -1,63 +1,116 @@
-function updateLogo() {
-  const payment = document.getElementById("payment").value;
-  const logo = document.getElementById("paymentLogo");
+// 🔢 тек сан
+["iin","phone","amount"].forEach(id=>{
+  document.getElementById(id).addEventListener("input",e=>{
+    e.target.value = e.target.value.replace(/\D/g,"");
+  });
+});
 
-  const logos = {
-    Kaspi: "logo/kaspi.png",
-    Freedom: "logo/freedom.png",
-    Qiwi: "logo/qiwi.png",
-    Halyk: "logo/halyk.png"
+// 💳 логотип
+function updateLogo(){
+  const map={
+    Kaspi:"logo/kaspi.png",
+    Freedom:"logo/freedom.png",
+    Qiwi:"logo/qiwi.png",
+    Halyk:"logo/halyk.png"
   };
-
-  if (logos[payment]) {
-    logo.src = logos[payment];
-    logo.style.display = "block";
-    logo.style.width = "120px";
-    logo.style.marginTop = "10px";
-  } else {
-    logo.style.display = "none";
-  }
+  const img=document.getElementById("paymentLogo");
+  const p=payment.value;
+  if(map[p]){
+    img.src=map[p];
+    img.style.display="block";
+  } else img.style.display="none";
 }
 
-function generatePDF() {
-  const seller = document.getElementById("seller").value;
-  const sellerBin = document.getElementById("sellerBin").value;
-  const buyer = document.getElementById("buyer").value;
-  const phone = document.getElementById("phone").value;
-  const item = document.getElementById("item").value;
-  const amount = document.getElementById("amount").value;
-  const payment = document.getElementById("payment").value;
+// ₸ формат
+function formatKZT(v){
+  return v.replace(/\B(?=(\d{3})+(?!\d))/g," ")+" ₸";
+}
 
-  if (!seller || !sellerBin || !buyer || !phone || !item || !amount || !payment) {
-    alert("Барлық жолды толтыр");
-    return;
-  }
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  doc.setFontSize(16);
-  doc.text("PayFlow Digital Check", 20, 20);
-
-  doc.setFontSize(12);
-  doc.text("Сатушы: " + seller, 20, 40);
-  doc.text("ИИН / БИН: " + sellerBin, 20, 50);
-  doc.text("Сатып алушы: " + buyer, 20, 60);
-  doc.text("Телефон: " + phone, 20, 70);
-  doc.text("Тауар: " + item, 20, 80);
-  doc.text("Сома: " + amount + " ₸", 20, 90);
-  doc.text("Төлем түрі: " + payment, 20, 100);
-
-  const logos = {
-    Kaspi: "logo/kaspi.png",
-    Freedom: "logo/freedom.png",
-    Qiwi: "logo/qiwi.png",
-    Halyk: "logo/halyk.png"
+// 🧾 PDF
+function generatePDF(){
+  const data={
+    seller:seller.value,
+    iin:iin.value,
+    buyer:buyer.value,
+    phone:phone.value,
+    item:item.value,
+    amount:amount.value,
+    payment:payment.value
   };
 
-  if (logos[payment]) {
-    doc.addImage(logos[payment], "PNG", 140, 40, 40, 40);
+  for(let k in data){
+    if(!data[k]){ alert("Барлық жолды толтыр"); return; }
   }
 
-  doc.save("PayFlow_Check.pdf");
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:"mm",format:[80,220]});
+  let y=10;
+
+  doc.setFont("courier","bold");
+  doc.setFontSize(14);
+  doc.text("PAYFLOW",40,y,{align:"center"});
+  y+=6;
+
+  doc.setFontSize(9);
+  doc.setFont("courier","normal");
+  doc.text("DIGITAL PAYMENT RECEIPT",40,y,{align:"center"});
+  y+=6;
+
+  doc.line(5,y,75,y); y+=6;
+
+  const logos={
+    Kaspi:"logo/kaspi.png",
+    Freedom:"logo/freedom.png",
+    Qiwi:"logo/qiwi.png",
+    Halyk:"logo/halyk.png"
+  };
+  doc.addImage(logos[data.payment],"PNG",25,y,30,12);
+  y+=16;
+
+  const row=(l,v)=>{
+    doc.text(l,5,y);
+    doc.text(v,75,y,{align:"right"});
+    y+=6;
+  };
+
+  row("SELLER",data.seller);
+  row("IIN / BIN",data.iin);
+  row("BUYER",data.buyer);
+  row("PHONE",data.phone);
+  row("ITEM",data.item);
+
+  doc.line(5,y,75,y); y+=6;
+
+  doc.setFont("courier","bold");
+  doc.setFontSize(12);
+  row("AMOUNT",formatKZT(data.amount));
+
+  doc.setFont("courier","normal");
+  doc.setFontSize(9);
+  row("PAYMENT",data.payment);
+
+  doc.line(5,y,75,y); y+=6;
+
+  row("CHECK ID","PF-"+Date.now());
+  row("DATE",new Date().toLocaleString());
+
+  doc.line(5,y,75,y); y+=6;
+
+  const qrDiv=document.createElement("div");
+  new QRCode(qrDiv,{
+    text:location.origin+location.pathname.replace("index.html","verify.html"),
+    width:100,height:100
+  });
+
+  setTimeout(()=>{
+    const img=qrDiv.querySelector("img");
+    doc.addImage(img.src,"PNG",22,y,36,36);
+    y+=40;
+
+    doc.setFontSize(8);
+    doc.text("Scan to verify receipt",40,y,{align:"center"});
+    y+=4;
+    doc.text("Demo only. Not a real payment.",40,y,{align:"center"});
+    doc.save("PayFlow_Check.pdf");
+  },300);
 }
